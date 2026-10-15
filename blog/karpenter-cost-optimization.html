@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karpenter Cost Optimization: NodePools That Actually Save Money - Archeon Cloud</title>
+  <meta name="description" content="Karpenter is only as cheap as its configuration. Consolidation, Spot diversification, disruption budgets, weighted NodePools for Savings Plans, and the anti-patterns that quietly waste money on EKS." />
+  <link rel="canonical" href="https://archeoncloud.com/blog/karpenter-cost-optimization.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Karpenter Cost Optimization: NodePools That Actually Save Money" />
+  <meta property="og:description" content="Karpenter is only as cheap as its configuration. Consolidation, Spot diversification, disruption budgets, weighted NodePools for Savings Plans, and the anti-patterns that quietly waste money on EKS." />
+  <meta property="og:url" content="https://archeoncloud.com/blog/karpenter-cost-optimization.html" />
+  <meta property="og:image" content="https://archeoncloud.com/assets/mark.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="aurora"></div>
+  <div class="grid-fade"></div>
+
+  <!-- Top Institutional APN Utility Bar -->
+<div class="top-bar">
+  <div class="top-bar__inner">
+    <div class="top-bar__left">
+      <span class="top-bar__pill"><span class="pulse"></span> AWS Partner Network (APN) Consultancy</span>
+      <span>Principal-Only Execution</span>
+      <span class="top-bar__sep">·</span>
+      <span>New York · London · Dubai · Istanbul</span>
+    </div>
+    <div class="top-bar__right">
+      <a href="../product/tokener/">Open IP: tokener LLM FinOps</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../case-studies/">7 Verified Enterprise Case Studies</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../poc/">4-Week Fixed-Scope Proof Lab</a>
+      <span class="top-bar__sep">·</span>
+      <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky Header & Mega-Menu Navigation -->
+<div class="site-header-shell">
+  <div class="wrap">
+    <header class="site">
+      <a class="brand" href="../" aria-label="Archeon Cloud home">
+        <img src="../assets/logo.svg" alt="Archeon Cloud - Principal AWS Consultancy" />
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation"><span></span></label>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-item">
+          <a href="../services/">
+            Capabilities
+            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+          </a>
+          <div class="nav-drop nav-drop--wide">
+            <div class="nav-drop__head">4 Core Capability Practices &amp; Advisory</div>
+            <a href="../services/#architecture">
+              <strong>01 · Cloud Foundation &amp; DevSecOps</strong>
+              <span>Multi-account AWS Control Tower, Terraform IaC, Golden AMIs, zero-downtime migration.</span>
+            </a>
+            <a href="../services/#streaming">
+              <strong>02 · High-Throughput Data &amp; Data Vault 2.0</strong>
+              <span>300k rec/sec PyArrow streaming, dbt Hybrid Data Vault 2.0, Iceberg &amp; Snowflake lakehouses.</span>
+            </a>
+            <a href="../services/#genai">
+              <strong>03 · Agentic AI &amp; Developer Platforms</strong>
+              <span>Amazon Bedrock RAG, FastMCP tool servers, Loop Engineering &amp; 10x agentic workflows.</span>
+            </a>
+            <a href="../services/#finops">
+              <strong>04 · Cloud FinOps &amp; Commercial Licensing</strong>
+              <span>22% cloud spend recovery, Oracle/SQL core optimization, tokener LLM unit economics.</span>
+            </a>
+            <a href="../consultancy/">
+              <strong>Executive Advisory &amp; Fractional Principal</strong>
+              <span>M&amp;A technical due diligence, architecture rescue, and board-grade roadmaps.</span>
+            </a>
+            <a href="../startups/">
+              <strong>High-Growth Startups &amp; AWS Activate</strong>
+              <span>SOC 2 / HIPAA-ready foundations in 3 weeks with credit-aligned co-funding.</span>
+            </a>
+          </div>
+        </div>
+
+  <div class="wrap wrap--narrow">
+    <section class="article-head">
+      <div class="crumbs"><a href="../">Home</a> &nbsp;/&nbsp; <a href="../blog/">Insights</a> &nbsp;/&nbsp; Karpenter Cost Optimization</div>
+      <div class="eyebrow">Karpenter · Spot</div>
+      <h1>Karpenter Cost Optimization: <span class="grad">NodePools That Actually Save Money</span></h1>
+      <p class="lede">Installing Karpenter does not make a cluster cheap. Configuring it to choose freely, consolidate aggressively and fail safely does. These are the settings and habits that separate a Karpenter cluster that saves a lot from one that quietly costs the same as before.</p>
+      <p class="shared">Shared by <b>Archeon Cloud LLC</b> · Principal AWS Partner Consultancy (New York · London · Dubai · Istanbul). To run this playbook against your own AWS estate, write to <a href="mailto:master@archeoncloud.com" style="color:var(--blue); text-decoration:none;">master@archeoncloud.com</a>.</p>
+    </section>
+
+    <div class="article-shell">
+<article class="article">
+      <h2>Why Karpenter changes the economics</h2>
+      <p>Cluster Autoscaler scales <em>groups</em> of identical nodes. Karpenter provisions <em>individual</em> nodes, chosen just in time from the whole EC2 catalogue to fit the pods that are pending, and then keeps looking for cheaper ways to run what is already scheduled. That second part, consolidation, is where most of the savings live. It only works if you let it.</p>
+      <p>Three principles drive every recommendation below:</p>
+      <ol>
+        <li><strong>Constrain less.</strong> The wider the set of instances Karpenter may choose, the cheaper and more Spot-resilient the fleet.</li>
+        <li><strong>Disrupt safely, not rarely.</strong> Consolidation requires moving pods. Make that safe with PodDisruptionBudgets instead of turning it off.</li>
+        <li><strong>Separate what you commit to from what you burst on.</strong> Weighted NodePools let a Savings Plan cover the floor while Spot covers the rest.</li>
+      </ol>
+
+      <h2>NodePool requirements: widen the funnel</h2>
+      <p>The most common anti-pattern is a NodePool that whitelists two or three instance types, which is exactly how the old node group behaved. Karpenter cannot save money it is not allowed to find. Express requirements as <strong>categories, generations and sizes</strong>, not as a list of types, and allow both Spot and On-Demand and both CPU architectures.</p>
+      <pre><code>apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: general
+spec:
+  template:
+    spec:
+      nodeClassRef:
+        group: karpenter.k8s.aws
+        kind: EC2NodeClass
+        name: default
+      requirements:
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["spot", "on-demand"]
+        - key: kubernetes.io/arch
+          operator: In
+          values: ["arm64", "amd64"]
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values: ["c", "m", "r"]
+        - key: karpenter.k8s.aws/instance-generation
+          operator: Gt
+          values: ["4"]
+        - key: karpenter.k8s.aws/instance-size
+          operator: NotIn
+          values: ["nano", "micro", "small", "metal"]
+      expireAfter: 720h          # rotate nodes monthly for fresh AMIs
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m
+    budgets:
+      - nodes: "10%"              # never disrupt more than 10% of nodes at once
+      - nodes: "0"                # freeze disruption during business-critical hours
+        schedule: "0 9 * * mon-fri"
+        duration: 8h
+  limits:
+    cpu: "2000"
+    memory: 4000Gi</code></pre>
+      <p>Notes on the choices above:</p>
+      <ul>
+        <li><strong>Generation &gt; 4</strong> excludes old, expensive-per-unit-of-work families while staying open to everything new.</li>
+        <li><strong>Excluding tiny sizes</strong> avoids nodes where DaemonSets eat most of the capacity. Excluding <code>metal</code> avoids surprise giants.</li>
+        <li><strong>Both architectures</strong> require multi-arch images. Build them once; Graviton is one of the biggest levers you have.</li>
+        <li><strong>Limits</strong> are a safety net against runaway scheduling, not a sizing tool. Set them well above normal peak.</li>
+      </ul>
+
+      <h2>Consolidation: the setting that pays the bill</h2>
+      <p><code>WhenEmptyOrUnderutilized</code> tells Karpenter to remove empty nodes <em>and</em> to replace or remove underutilised ones when the pods could fit elsewhere more cheaply. This includes <strong>Spot-to-Spot consolidation</strong>, where Karpenter replaces a Spot node with a cheaper Spot node when it has enough instance-type diversity to do so safely.</p>
+      <p>Teams that see “no savings” from Karpenter have almost always done one of three things:</p>
+      <ul>
+        <li>Set <code>consolidationPolicy: WhenEmpty</code>, so nodes are only removed when nothing runs on them, which on a busy cluster is never.</li>
+        <li>Shipped workloads <strong>without PodDisruptionBudgets</strong>, or with PDBs of <code>maxUnavailable: 0</code>, making every node undrainable.</li>
+        <li>Annotated far too many pods with <code>karpenter.sh/do-not-disrupt: "true"</code>. Reserve that for genuinely non-interruptible work such as a long batch step.</li>
+      </ul>
+      <blockquote>A PodDisruptionBudget is not an availability feature you add later. In a Karpenter cluster it is the mechanism that makes savings possible.</blockquote>
+      <p><strong>Disruption budgets</strong> give you the safety to run consolidation continuously. Cap concurrent disruptions to a percentage of nodes, and schedule a zero-disruption window during peak traffic or deployment freezes rather than switching consolidation off cluster-wide.</p>
+
+      <h2>Spot done properly</h2>
+      <ul>
+        <li><strong>Diversify.</strong> Karpenter uses the price-capacity-optimized allocation strategy, which works best when it has dozens of candidate types. That is another reason to specify categories, not types.</li>
+        <li><strong>Handle interruptions natively.</strong> Enable Karpenter’s interruption handling by giving it an SQS queue fed by EventBridge for Spot interruption, rebalance and health events. It will cordon, drain and replace the node before EC2 reclaims it.</li>
+        <li><strong>Keep stateful and singleton workloads on On-Demand</strong> using a <code>nodeSelector</code> on <code>karpenter.sh/capacity-type: on-demand</code>, and let everything else float.</li>
+        <li><strong>Spread replicas</strong> with <code>topologySpreadConstraints</code> using <code>ScheduleAnyway</code> across zones and, if useful, across capacity types, so a Spot reclaim never takes every replica at once.</li>
+      </ul>
+
+      <h2>Weighted NodePools: commitments and bursts, side by side</h2>
+      <p>You will usually still want a Compute Savings Plan for the steady baseline. The trick is to make Karpenter fill that committed capacity first and burst onto Spot only above it. Two NodePools with <strong>weights and limits</strong> do exactly this:</p>
+      <pre><code># 1) On-Demand baseline, sized to the Savings Plan you own
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: baseline-od
+spec:
+  weight: 100                    # preferred while under its limit
+  limits:
+    cpu: "400"                   # ≈ the vCPU your Savings Plan covers
+  template:
+    spec:
+      nodeClassRef: { group: karpenter.k8s.aws, kind: EC2NodeClass, name: default }
+      requirements:
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["on-demand"]
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values: ["c", "m", "r"]
+        - key: karpenter.k8s.aws/instance-generation
+          operator: Gt
+          values: ["4"]
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m
+---
+# 2) Spot overflow with no limit and lower weight
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: burst-spot
+spec:
+  weight: 10
+  template:
+    spec:
+      nodeClassRef: { group: karpenter.k8s.aws, kind: EC2NodeClass, name: default }
+      requirements:
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["spot"]
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values: ["c", "m", "r"]
+        - key: karpenter.k8s.aws/instance-generation
+          operator: Gt
+          values: ["4"]
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m</code></pre>
+      <p>Karpenter prefers the higher-weight pool until its limit is reached, then spills into Spot. Measure the baseline honestly before you buy the plan; see <a href="../blog/kubernetes-cost-optimization-eks.html">Closing the Request Gap</a> for why the baseline should shrink first.</p>
+
+      <h2>EC2NodeClass: the details that leak money</h2>
+      <ul>
+        <li><strong>Root volumes:</strong> set <code>blockDeviceMappings</code> explicitly to gp3 with a size that matches image footprint. Defaults are often larger and slower per dollar than needed.</li>
+        <li><strong>AMI selection:</strong> pin to an alias such as <code>al2023@latest</code> or a Bottlerocket alias and let <code>expireAfter</code> plus drift rotate nodes. Patch management becomes free.</li>
+        <li><strong>Subnets and security groups:</strong> use discovery tags so the fleet can land in every private subnet and zone. Fewer zones means fewer Spot pools.</li>
+        <li><strong>Instance metadata and tags:</strong> propagate cost-allocation tags so the nodes Karpenter creates are attributed correctly in the Cost and Usage Report.</li>
+      </ul>
+
+      <h2>Anti-patterns we keep finding</h2>
+      <table>
+        <thead><tr><th>What we see</th><th>Why it hurts</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>Instance-type whitelists</td><td>Blocks cheaper types and starves Spot diversity</td><td>Use category, generation and size requirements</td></tr>
+          <tr><td><code>WhenEmpty</code> consolidation</td><td>Nodes are never empty on a busy cluster</td><td><code>WhenEmptyOrUnderutilized</code> with budgets</td></tr>
+          <tr><td>No PDBs or <code>maxUnavailable: 0</code></td><td>Nothing can be drained, so nothing consolidates</td><td>PDBs with realistic <code>minAvailable</code></td></tr>
+          <tr><td>Inflated pod requests</td><td>Karpenter buys exactly what pods ask for</td><td>Right-size requests first</td></tr>
+          <tr><td>One NodePool for everything</td><td>Cannot align commitments or isolate GPU and stateful work</td><td>Weighted, purpose-specific NodePools</td></tr>
+          <tr><td>Single-zone subnets</td><td>Fewer Spot pools, more interruptions, more On-Demand fallback</td><td>Discover subnets in every zone</td></tr>
+          <tr><td>Very short <code>consolidateAfter</code> on bursty clusters</td><td>Node churn and cold starts outweigh savings</td><td>Tune to minutes, watch churn metrics</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Measure it</h2>
+      <p>Karpenter exposes Prometheus metrics for provisioning decisions, disruption actions and, in recent versions, per-NodePool cost estimates. Track:</p>
+      <ul>
+        <li><strong>Spot share</strong> of vCPU hours and how often Spot falls back to On-Demand.</li>
+        <li><strong>Consolidation actions</strong> per hour, and pending-pod time, to balance savings against churn.</li>
+        <li><strong>Node utilisation</strong> (allocatable versus requested versus used), ideally through Kubecost or OpenCost alongside the Karpenter metrics.</li>
+        <li><strong>Baseline pool utilisation</strong> against the Savings Plan commitment, so you know when to resize the plan or the limit.</li>
+      </ul>
+
+      <div class="callout">
+        <h4>Karpenter cost checklist</h4>
+        <ul>
+          <li>Requirements by category, generation and size, not by type.</li>
+          <li>Spot and On-Demand, arm64 and amd64, all zones.</li>
+          <li><code>WhenEmptyOrUnderutilized</code> with disruption budgets, not <code>WhenEmpty</code>.</li>
+          <li>PodDisruptionBudgets on every Deployment; <code>do-not-disrupt</code> only where justified.</li>
+          <li>Native interruption handling via SQS and EventBridge.</li>
+          <li>Weighted On-Demand baseline pool sized to your Savings Plan, Spot overflow pool unlimited.</li>
+          <li>gp3 root volumes, AMI alias plus <code>expireAfter</code> for rotation.</li>
+          <li>Pod requests right-sized before you judge the results.</li>
+        </ul>
+      </div>
+
+      <p>Configured this way, Karpenter stops being a smarter autoscaler and becomes a continuous procurement engine that renegotiates your compute every minute. That is a very different cost profile from the node groups it replaced.</p>
+    </article>
+
+    <div class="article-foot">
+      <p class="shared">Shared by <b>Archeon Cloud LLC</b> · Principal AWS Partner Consultancy (New York · London · Dubai · Istanbul). To run this playbook against your own AWS estate, write to <a href="mailto:master@archeoncloud.com" style="color:var(--blue); text-decoration:none;">master@archeoncloud.com</a>.</p>
+
+      <div class="related">
+        <h3>Related reading</h3>
+        <div class="grid grid-2" style="margin-top:0;">
+<a class="card card--link post-card" href="../blog/ai-ml-cost-optimization-aws.html" style="min-height:auto;"><span class="kicker">AI/ML · FinOps</span><h3 style="font-size:17px;">AI/ML Cost Optimization on AWS: Where the GPU Money Really Goes</h3><span class="more">Read →</span></a>
+<a class="card card--link post-card" href="../blog/kubernetes-cost-optimization-eks.html" style="min-height:auto;"><span class="kicker">Kubernetes · EKS</span><h3 style="font-size:17px;">Kubernetes Cost Optimization: Closing the Request Gap on Amazon EKS</h3><span class="more">Read →</span></a>
+</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Institutional Footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="../assets/logo.svg" alt="Archeon Cloud" />
+        <p>Principal-led AWS Partner Network (APN) consultancy &amp; Open IP engineering lab. Cloud foundations, 300k rec/sec data platforms, Data Vault 2.0, Agentic AI, and FinOps.</p>
+        <p style="margin-top: 10px; font-size: 0.78rem; color: var(--silver);"><strong>New York · London · Dubai · Istanbul</strong></p>
+      </div>
+      <div>
+        <h4>Capabilities</h4>
+        <ul>
+          <li><a href="../services/#architecture">Cloud Foundation &amp; DevSecOps</a></li>
+          <li><a href="../services/#streaming">Streaming &amp; Data Vault 2.0</a></li>
+          <li><a href="../services/#genai">Agentic AI &amp; Bedrock RAG</a></li>
+          <li><a href="../services/#finops">Cloud &amp; Licensing FinOps</a></li>
+          <li><a href="../poc/">4-Week Proof Lab</a></li>
+          <li><a href="../consultancy/">Executive Advisory</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Open IP (ACE)</h4>
+        <ul>
+          <li><a href="../product/tokener/">tokener LLM FinOps</a></li>
+          <li><a href="../services/#genai">Loop Engineering &amp; FastMCP</a></li>
+          <li><a href="../services/#data-vault">automate-dv-kimball (dbt)</a></li>
+          <li><a href="../services/#streaming">PyArrow Streaming Core</a></li>
+          <li><a href="../startups/">Startups &amp; AWS Activate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Industries &amp; Proof</h4>
+        <ul>
+          <li><a href="../case-studies/">7 Enterprise Case Studies</a></li>
+          <li><a href="../industries/#telecom">Telecom &amp; Media</a></li>
+          <li><a href="../industries/#iiot">Industrial IoT &amp; Rail</a></li>
+          <li><a href="../industries/#fintech">Banking &amp; FinTech</a></li>
+          <li><a href="../industries/#pe-saas">PE, M&amp;A &amp; B2B SaaS</a></li>
+          <li><a href="../industries/#govtech">Public Sector &amp; Defense</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company &amp; Insights</h4>
+        <ul>
+          <li><a href="../about/">About &amp; Principal Pedigree</a></li>
+          <li><a href="../blog/">Engineering Playbooks</a></li>
+          <li><a href="../contact/">Book Architecture Review</a></li>
+          <li><a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Archeon Cloud LLC · AWS Partner Network (APN) Consulting Partner · All rights reserved.</span>
+      <span>Built by principals, for engineers · <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

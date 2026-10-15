@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>4-Week Fixed-Scope Proof Lab (PoC Sprints) - Archeon Cloud</title>
+<meta name="description" content="Fixed-scope, fixed-price 2-to-4-week Proof of Concept sprints on AWS for enterprises, scale-ups, and startups. Prove 300k/s PyArrow streaming, Data Vault 2.0, Amazon Bedrock RAG, or EKS Karpenter savings in your own AWS account." />
+<link rel="canonical" href="https://archeoncloud.com/poc/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="4-Week Fixed-Scope Proof Lab (PoC Sprints) - Archeon Cloud" />
+<meta property="og:description" content="Two to four weeks, one hard architectural question, a working production-shaped answer in your own AWS account with a real unit-cost model and a written go / no-go ADR." />
+<meta property="og:url" content="https://archeoncloud.com/poc/" />
+<meta property="og:image" content="https://archeoncloud.com/assets/mark.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0B1220" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png" />
+<link rel="apple-touch-icon" href="../assets/mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"></div>
+<div class="grid-fade" aria-hidden="true"></div>
+
+<!-- Top Institutional APN Utility Bar -->
+<div class="top-bar">
+  <div class="top-bar__inner">
+    <div class="top-bar__left">
+      <span class="top-bar__pill"><span class="pulse"></span> AWS Partner Network (APN) Consultancy</span>
+      <span>Principal-Only Execution</span>
+      <span class="top-bar__sep">·</span>
+      <span>New York · London · Dubai · Istanbul</span>
+    </div>
+    <div class="top-bar__right">
+      <a href="../product/tokener/">Open IP: tokener LLM FinOps</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../case-studies/">7 Verified Enterprise Case Studies</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../poc/">4-Week Fixed-Scope Proof Lab</a>
+      <span class="top-bar__sep">·</span>
+      <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky Header & Mega-Menu Navigation -->
+<div class="site-header-shell">
+  <div class="wrap">
+    <header class="site">
+      <a class="brand" href="../" aria-label="Archeon Cloud home">
+        <img src="../assets/logo.svg" alt="Archeon Cloud - Principal AWS Consultancy" />
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation"><span></span></label>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-item">
+          <a href="../services/">
+            Capabilities
+            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+          </a>
+          <div class="nav-drop nav-drop--wide">
+            <div class="nav-drop__head">4 Core Capability Practices &amp; Advisory</div>
+            <a href="../services/#architecture">
+              <strong>01 · Cloud Foundation &amp; DevSecOps</strong>
+              <span>Multi-account AWS Control Tower, Terraform IaC, Golden AMIs, zero-downtime migration.</span>
+            </a>
+            <a href="../services/#streaming">
+              <strong>02 · High-Throughput Data &amp; Data Vault 2.0</strong>
+              <span>300k rec/sec PyArrow streaming, dbt Hybrid Data Vault 2.0, Iceberg &amp; Snowflake lakehouses.</span>
+            </a>
+            <a href="../services/#genai">
+              <strong>03 · Agentic AI &amp; Developer Platforms</strong>
+              <span>Amazon Bedrock RAG, FastMCP tool servers, Loop Engineering &amp; 10x agentic workflows.</span>
+            </a>
+            <a href="../services/#finops">
+              <strong>04 · Cloud FinOps &amp; Commercial Licensing</strong>
+              <span>22% cloud spend recovery, Oracle/SQL core optimization, tokener LLM unit economics.</span>
+            </a>
+            <a href="../consultancy/">
+              <strong>Executive Advisory &amp; Fractional Principal</strong>
+              <span>M&amp;A technical due diligence, architecture rescue, and board-grade roadmaps.</span>
+            </a>
+            <a href="../startups/">
+              <strong>High-Growth Startups &amp; AWS Activate</strong>
+              <span>SOC 2 / HIPAA-ready foundations in 3 weeks with credit-aligned co-funding.</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="../product/tokener/">
+            Open IP &amp; Products
+            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+          </a>
+          <div class="nav-drop">
+            <div class="nav-drop__head">The Archeon Cloud Engine (ACE)</div>
+            <a href="../product/tokener/">
+              <strong>tokener · LLM FinOps Control Plane</strong>
+              <span>Self-hosted pre-stream token budget enforcement &amp; real-time cost attribution for Bedrock, Anthropic &amp; OpenAI.</span>
+            </a>
+            <a href="../services/#genai">
+              <strong>Loop Engineering &amp; AI Skills OS</strong>
+              <span>Reusable FastMCP servers &amp; agentic context protocols delivering 10x developer velocity.</span>
+            </a>
+            <a href="../services/#data-vault">
+              <strong>automate-dv-kimball · Open-Source dbt IP</strong>
+              <span>Automated Raw/Business Data Vault 2.0 to dimensional Kimball star-schema accelerator.</span>
+            </a>
+            <a href="../services/#streaming">
+              <strong>PyArrow C++ Zero-Copy Streaming Core</strong>
+              <span>300k records/sec micro-batch Parquet engine running under 80 MB RAM at 1/10th Spark cost.</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="../industries/">
+            Industries
+            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+          </a>
+          <div class="nav-drop nav-drop--wide">
+            <div class="nav-drop__head">Regulated &amp; High-Velocity Verticals</div>
+            <a href="../industries/#telecom">
+              <strong>Telecom &amp; Digital Media</strong>
+              <span>50M+ subscriber DPI telemetry, 20.5B daily records, sub-minute observability.</span>
+            </a>
+            <a href="../industries/#iiot">
+              <strong>Industrial IoT, Rail &amp; Mobility</strong>
+              <span>50M+ daily sensor files, fleet digital twins, predictive maintenance on AWS.</span>
+            </a>
+            <a href="../industries/#fintech">
+              <strong>Banking, Capital Markets &amp; FinTech</strong>
+              <span>PCI-DSS, SOX &amp; GDPR lakehouses, risk analytics, commercial database FinOps.</span>
+            </a>
+            <a href="../industries/#pe-saas">
+              <strong>Private Equity, M&amp;A &amp; B2B SaaS</strong>
+              <span>Post-merger cloud carve-outs, 1,000x CI/CD acceleration, SaaS unit economics.</span>
+            </a>
+            <a href="../industries/#retail">
+              <strong>Global Retail &amp; Supply Chain</strong>
+              <span>Omnichannel demand forecasting, 100% crash elimination via dbt &amp; DuckDB.</span>
+            </a>
+            <a href="../industries/#govtech">
+              <strong>Public Sector, Defense &amp; GovTech</strong>
+              <span>Air-gapped migrations, 80 TB intelligence archives, 19x national tax platform scale.</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="../case-studies/">Case Studies</a>
+        <a href="../poc/" class="active">Proof Lab</a>
+        <a href="../blog/">Insights</a>
+        <a href="../about/">About</a>
+      </nav>
+      <a class="nav-cta" href="../contact/">
+        Book Architecture Review
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </header>
+  </div>
+</div>
+
+<div class="wrap">
+  <main>
+    <section class="hero hero--left">
+      <div class="eyebrow">Archeon Proof Lab · Fixed-Scope PoC Sprints</div>
+      <h1>One Hard Architectural Question. <span class="grad">A Working Answer in 2 to 4 Weeks.</span></h1>
+      <p class="lede">
+        High-stakes cloud, streaming data, and Agentic AI decisions should never be made from vendor slide decks.
+        An Archeon Proof Lab sprint builds the riskiest vertical slice first - inside your own AWS account, using production-grade Terraform, dbt, PyArrow, or Amazon Bedrock code - so your leadership team can make a go / no-go decision backed by audited telemetry and unit economics.
+      </p>
+      <div class="cta-row" style="margin-top:26px;">
+        <a class="btn" href="../contact/">Scope Your 4-Week Proof Sprint →</a>
+        <a class="btn btn--ghost" href="#blueprints">Pre-Packaged Sprint Blueprints</a>
+        <a class="btn btn--ghost" href="#how">How a Sprint Works</a>
+      </div>
+    </section>
+
+    <!-- Pre-Packaged Proof Lab Blueprints -->
+    <section class="block" id="blueprints">
+      <div class="eyebrow">Ready-to-Deploy Sprint Tracks</div>
+      <h2>Four High-Impact Proof Sprints Powered by <span class="grad">The Archeon Cloud Engine.</span></h2>
+      <p class="sub">
+        Because we deploy our pre-built Open IP accelerators on day one, a 4-week Archeon sprint achieves what takes traditional consultancies an entire quarter.
+      </p>
+      <div class="practice-grid">
+        <article class="practice-card">
+          <div>
+            <div class="practice-card__top">
+              <span class="practice-card__num">Sprint Track 01 · 3-4 Weeks</span>
+              <span class="practice-card__persona">Streaming &amp; Lakehouse</span>
+            </div>
+            <h3>300k/s Zero-Copy Streaming vs. Legacy Spark / Batch</h3>
+            <p class="practice-card__desc">
+              Benchmark our stateful C++/PyArrow zero-copy streaming engine against your slowest, most expensive Apache Spark or legacy ETL pipeline on a real slice of your production telemetry.
+            </p>
+            <ul class="practice-card__list">
+              <li>Deploy PyArrow/Polars micro-batch Parquet ingestion writing to S3 / Apache Iceberg</li>
+              <li>Side-by-side benchmark of throughput, memory ceiling (&lt;80 MB target), and AWS compute cost</li>
+              <li>Written TCO comparison and production cutover plan</li>
+            </ul>
+          </div>
+          <div class="practice-card__foot">
+            <span class="practice-card__metric">Target: 4x faster EL · 90% lower compute cost</span>
+            <a class="link" href="../contact/">Scope Track 01 →</a>
+          </div>
+        </article>
+
+        <article class="practice-card">
+          <div>
+            <div class="practice-card__top">
+              <span class="practice-card__num">Sprint Track 02 · 3-4 Weeks</span>
+              <span class="practice-card__persona">Data Vault 2.0 + Kimball</span>
+            </div>
+            <h3>Hybrid Data Vault 2.0 &amp; Legacy SQL Refactoring Pilot</h3>
+            <p class="practice-card__desc">
+              Take your most fragile stored procedures or un-auditable BI tables and refactor them into an automated Hybrid Data Vault 2.0 + Kimball star schema using <code>dbt</code> and <code>automate-dv-kimball</code>.
+            </p>
+            <ul class="practice-card__list">
+              <li>Automated Hubs, Links, Satellites, PIT tables, and Kimball dimensional marts on Snowflake, Iceberg, or DuckDB</li>
+              <li>Full CI data contract testing and column-level regulatory lineage</li>
+              <li>Embedded Loop Engineering AI skills for your data engineers</li>
+            </ul>
+          </div>
+          <div class="practice-card__foot">
+            <span class="practice-card__metric">Target: 100% crash elimination · 30%+ faster BI</span>
+            <a class="link" href="../contact/">Scope Track 02 →</a>
+          </div>
+        </article>
+
+        <article class="practice-card">
+          <div>
+            <div class="practice-card__top">
+              <span class="practice-card__num">Sprint Track 03 · 2-4 Weeks</span>
+              <span class="practice-card__persona">Bedrock RAG + tokener</span>
+            </div>
+            <h3>Cost-Governed Amazon Bedrock RAG &amp; FastMCP Agent</h3>
+            <p class="practice-card__desc">
+              Build a production-grade RAG or Text-to-SQL FastMCP agent over your real enterprise documents and schemas, complete with deterministic evaluation gates and <code>tokener</code> cost controls.
+            </p>
+            <ul class="practice-card__list">
+              <li>Hybrid retrieval (pgvector / OpenSearch) + reranking + Bedrock Guardrails in your VPC</li>
+              <li>Golden-dataset accuracy harness measuring faithfulness and p95 latency</li>
+              <li>Live <code>tokener</code> gateway enforcing per-user and per-tenant USD token budgets</li>
+            </ul>
+          </div>
+          <div class="practice-card__foot">
+            <span class="practice-card__metric">Target: Audited accuracy + hard USD/query cap</span>
+            <a class="link" href="../contact/">Scope Track 03 →</a>
+          </div>
+        </article>
+
+        <article class="practice-card">
+          <div>
+            <div class="practice-card__top">
+              <span class="practice-card__num">Sprint Track 04 · 2-3 Weeks</span>
+              <span class="practice-card__persona">Cloud &amp; Licensing FinOps</span>
+            </div>
+            <h3>EKS Karpenter, Graviton &amp; Database Licensing Surgery</h3>
+            <p class="practice-card__desc">
+              Validate a high-leverage cost reduction strategy on a staging or shadow copy of your production workload before touching customer traffic.
+            </p>
+            <ul class="practice-card__list">
+              <li>Karpenter NodePool consolidation &amp; Spot diversification on Amazon EKS</li>
+              <li>Graviton4 / Inferentia2 benchmark or commercial Oracle/SQL core isolation model</li>
+              <li>Board-ready CFO savings ledger with 100% of PoC fees credited toward rollout</li>
+            </ul>
+          </div>
+          <div class="practice-card__foot">
+            <span class="practice-card__metric">Target: 22% to 50%+ verified run-rate reduction</span>
+            <a class="link" href="../contact/">Scope Track 04 →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Who runs a sprint -->
+    <section class="block" id="who">
+      <div class="eyebrow">Who Runs a Sprint With Us</div>
+      <h2>Built for Any Leader With a Decision <span class="grad">Too Expensive to Guess.</span></h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01M12 8h.01"/></svg></div>
+          <h3>Enterprises</h3>
+          <p>De-risk a migration wave, a lakehouse modernization, or an Amazon Bedrock initiative before it goes to the steering committee. Structured to qualify for AWS Proof-of-Concept (MAP/PoC) co-funding where eligible.</p>
+        </article>
+        <article class="card">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Scale-Ups &amp; PE Portfolios</h3>
+          <p>Prove a Karpenter and Spot strategy on a copy of production, validate Packer Golden AMI compliance pipelines, or test Graviton/Trainium economics before committing your quarterly engineering roadmap.</p>
+        </article>
+        <article class="card">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.1 2.1 0 0 0-2.9-.1z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.9 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.5-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.5 4-2c1.1-1.6 0-5 0-5"/></svg></div>
+          <h3>Venture-Backed Startups</h3>
+          <p>Show investors and enterprise design partners a working, SOC 2-ready system instead of a slide deck. Build the architectural capability that decides the round on a fixed budget and timeline.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- How a sprint works -->
+    <section class="block" id="how">
+      <div class="eyebrow">Sprint Execution Cadence</div>
+      <h2>Four Disciplined Moves. <span class="grad">Fixed Price, Fixed Time, Production Code.</span></h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Frame &amp; Hypothesis</h3>
+          <p>We agree on the exact architectural hypothesis, quantitative pass/fail metrics, AWS budget ceiling, and what a "no-go" result looks like.</p>
+          <em>Days 1-2 · Signed Charter</em>
+        </div>
+        <div class="step">
+          <h3>Build in Your VPC</h3>
+          <p>A principal engineer builds the thinnest production-shaped vertical slice that exercises the real risk: latency, throughput, accuracy, or unit cost. Terraform from commit #1.</p>
+          <em>Weeks 1-3 · Live PRs</em>
+        </div>
+        <div class="step">
+          <h3>Stress-Test &amp; Meter</h3>
+          <p>We run the implementation against your real data volumes and traffic patterns, recording hard telemetry and modeling 12-month production TCO.</p>
+          <em>Final Week · Benchmark</em>
+        </div>
+        <div class="step">
+          <h3>ADR &amp; Handover</h3>
+          <p>You receive a written Go / No-Go Architecture Decision Record (ADR), an async video walkthrough, the full repository, and a production rollout plan.</p>
+          <em>Final Day · 100% Owned</em>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="details">
+      <div class="grid grid-3" style="margin-top:0;">
+        <article class="card">
+          <h3>Popular Sprint Topics</h3>
+          <ul>
+            <li>Amazon Bedrock RAG or FastMCP agent over your internal data</li>
+            <li>PyArrow C++ zero-copy streaming vs. costly Spark clusters</li>
+            <li>Hybrid Data Vault 2.0 + Kimball pilot with <code>automate-dv-kimball</code></li>
+            <li>EKS Karpenter + Spot consolidation on a shadow workload</li>
+            <li>Zero-downtime AWS DMS + Debezium CDC database cutover rehearsal</li>
+            <li>SOC 2 / HIPAA Control Tower landing zone &amp; Golden AMI pipeline</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>What You Own at Day 28</h3>
+          <ul>
+            <li>Working Terraform, Python, dbt, or C++ code in your Git repos</li>
+            <li>Measured benchmark telemetry against agreed pass/fail criteria</li>
+            <li>12-month production unit-cost model and target architecture</li>
+            <li>Written Go / No-Go ADR plus 10-minute async video RFC</li>
+            <li>Zero vendor lock-in; your engineers pair with us throughout</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Commercial Terms</h3>
+          <ul>
+            <li>Fixed price agreed in writing before day one</li>
+            <li>Two to four weeks calendar duration; zero scope creep</li>
+            <li>AWS PoC / Activate co-funding applied wherever you qualify</li>
+            <li>100% credited toward the production rollout if you proceed</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="eyebrow" style="justify-content:center;">De-Risk Your Next Architecture Decision</div>
+      <h2>Tell Us the Architectural Question <span class="grad">You Need Proven.</span></h2>
+      <p class="sub">We will tell you in a single 30-minute call whether it needs a 4-week sprint, a 2-hour review, or a different approach altogether.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:master@archeoncloud.com?subject=Archeon%20Cloud%20-%204-Week%20Proof%20Lab%20Inquiry">Email master@archeoncloud.com</a>
+        <a class="btn btn--ghost" href="../contact/">Book a 30-Minute Scoping Call</a>
+      </div>
+      <span class="contact-mail">New York · London · Dubai · Istanbul · <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></span>
+    </section>
+  </main>
+</div>
+
+<!-- Institutional Footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="../assets/logo.svg" alt="Archeon Cloud" />
+        <p>Principal-led AWS Partner Network (APN) consultancy &amp; Open IP engineering lab. Cloud foundations, 300k rec/sec data platforms, Data Vault 2.0, Agentic AI, and FinOps.</p>
+        <p style="margin-top: 10px; font-size: 0.78rem; color: var(--silver);"><strong>New York · London · Dubai · Istanbul</strong></p>
+      </div>
+      <div>
+        <h4>Capabilities</h4>
+        <ul>
+          <li><a href="../services/#architecture">Cloud Foundation &amp; DevSecOps</a></li>
+          <li><a href="../services/#streaming">Streaming &amp; Data Vault 2.0</a></li>
+          <li><a href="../services/#genai">Agentic AI &amp; Bedrock RAG</a></li>
+          <li><a href="../services/#finops">Cloud &amp; Licensing FinOps</a></li>
+          <li><a href="../poc/">4-Week Proof Lab</a></li>
+          <li><a href="../consultancy/">Executive Advisory</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Open IP (ACE)</h4>
+        <ul>
+          <li><a href="../product/tokener/">tokener LLM FinOps</a></li>
+          <li><a href="../services/#genai">Loop Engineering &amp; FastMCP</a></li>
+          <li><a href="../services/#data-vault">automate-dv-kimball (dbt)</a></li>
+          <li><a href="../services/#streaming">PyArrow Streaming Core</a></li>
+          <li><a href="../startups/">Startups &amp; AWS Activate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Industries &amp; Proof</h4>
+        <ul>
+          <li><a href="../case-studies/">7 Enterprise Case Studies</a></li>
+          <li><a href="../industries/#telecom">Telecom &amp; Media</a></li>
+          <li><a href="../industries/#iiot">Industrial IoT &amp; Rail</a></li>
+          <li><a href="../industries/#fintech">Banking &amp; FinTech</a></li>
+          <li><a href="../industries/#pe-saas">PE, M&amp;A &amp; B2B SaaS</a></li>
+          <li><a href="../industries/#govtech">Public Sector &amp; Defense</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company &amp; Insights</h4>
+        <ul>
+          <li><a href="../about/">About &amp; Principal Pedigree</a></li>
+          <li><a href="../blog/">Engineering Playbooks</a></li>
+          <li><a href="../contact/">Book Architecture Review</a></li>
+          <li><a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Archeon Cloud LLC · AWS Partner Network (APN) Consulting Partner · All rights reserved.</span>
+      <span>Built by principals, for engineers · <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

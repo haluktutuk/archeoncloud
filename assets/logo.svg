@@ -1,0 +1,40 @@
+<svg width="800" height="200" viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Archeon Cloud">
+  <defs>
+    <linearGradient id="lgSteel" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1d2734"/>
+      <stop offset="0.55" stop-color="#0f151f"/>
+      <stop offset="1" stop-color="#06090f"/>
+    </linearGradient>
+    <linearGradient id="lgPlate" x1="100" y1="42" x2="100" y2="156" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EDF3FA"/>
+      <stop offset="0.4" stop-color="#C3CFDE"/>
+      <stop offset="0.72" stop-color="#93A3BA"/>
+      <stop offset="1" stop-color="#63728B"/>
+    </linearGradient>
+    <linearGradient id="lgRidge" x1="100" y1="42" x2="100" y2="156" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#DCEBFB" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#DCEBFB" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="lgEdge" x1="20" y1="30" x2="180" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7FB6E4"/>
+      <stop offset="1" stop-color="#3B4763"/>
+    </linearGradient>
+  </defs>
+
+  <g>
+    <polygon points="100,8 180,54 180,146 100,192 20,146 20,54"
+             fill="url(#lgSteel)" stroke="url(#lgEdge)" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M49 152 L100 46 L151 152"
+          fill="none" stroke="url(#lgPlate)" stroke-width="23" stroke-linejoin="miter" stroke-linecap="butt"/>
+    <path d="M68 117 L132 117"
+          fill="none" stroke="url(#lgPlate)" stroke-width="19" stroke-linecap="butt"/>
+    <path d="M49 152 L100 46 L151 152"
+          fill="none" stroke="url(#lgRidge)" stroke-width="7" stroke-linejoin="miter" stroke-linecap="butt"/>
+  </g>
+
+  <g transform="translate(214,0)" font-family="'Helvetica Neue', Arial, sans-serif">
+    <text x="0" y="96" font-size="62" font-weight="800" letter-spacing="1" fill="#0B1220">ARCHEON</text>
+    <text x="2" y="150" font-size="34" font-weight="600" letter-spacing="14" fill="#5E80A6">CLOUD</text>
+  </g>
+</svg>

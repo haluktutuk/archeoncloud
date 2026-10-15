@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kubernetes Cost Optimization: Closing the Request Gap on Amazon EKS - Archeon Cloud</title>
+  <meta name="description" content="Your EKS bill is an EC2 bill in disguise. How to right-size requests, bin-pack nodes, buy compute well with Spot, Graviton and Savings Plans, and stop paying for empty clusters." />
+  <link rel="canonical" href="https://archeoncloud.com/blog/kubernetes-cost-optimization-eks.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Kubernetes Cost Optimization: Closing the Request Gap on Amazon EKS" />
+  <meta property="og:description" content="Your EKS bill is an EC2 bill in disguise. How to right-size requests, bin-pack nodes, buy compute well with Spot, Graviton and Savings Plans, and stop paying for empty clusters." />
+  <meta property="og:url" content="https://archeoncloud.com/blog/kubernetes-cost-optimization-eks.html" />
+  <meta property="og:image" content="https://archeoncloud.com/assets/mark.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="aurora"></div>
+  <div class="grid-fade"></div>
+
+  <!-- Top Institutional APN Utility Bar -->
+<div class="top-bar">
+  <div class="top-bar__inner">
+    <div class="top-bar__left">
+      <span class="top-bar__pill"><span class="pulse"></span> AWS Partner Network (APN) Consultancy</span>
+      <span>Principal-Only Execution</span>
+      <span class="top-bar__sep">·</span>
+      <span>New York · London · Dubai · Istanbul</span>
+    </div>
+    <div class="top-bar__right">
+      <a href="../product/tokener/">Open IP: tokener LLM FinOps</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../case-studies/">7 Verified Enterprise Case Studies</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../poc/">4-Week Fixed-Scope Proof Lab</a>
+      <span class="top-bar__sep">·</span>
+      <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky Header & Mega-Menu Navigation -->
+<div class="site-header-shell">
+  <div class="wrap">
+    <header class="site">
+      <a class="brand" href="../" aria-label="Archeon Cloud home">
+        <img src="../assets/logo.svg" alt="Archeon Cloud - Principal AWS Consultancy" />
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation"><span></span></label>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-item">
+          <a href="../services/">
+            Capabilities
+            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+          </a>
+          <div class="nav-drop nav-drop--wide">
+            <div class="nav-drop__head">4 Core Capability Practices &amp; Advisory</div>
+            <a href="../services/#architecture">
+              <strong>01 · Cloud Foundation &amp; DevSecOps</strong>
+              <span>Multi-account AWS Control Tower, Terraform IaC, Golden AMIs, zero-downtime migration.</span>
+            </a>
+            <a href="../services/#streaming">
+              <strong>02 · High-Throughput Data &amp; Data Vault 2.0</strong>
+              <span>300k rec/sec PyArrow streaming, dbt Hybrid Data Vault 2.0, Iceberg &amp; Snowflake lakehouses.</span>
+            </a>
+            <a href="../services/#genai">
+              <strong>03 · Agentic AI &amp; Developer Platforms</strong>
+              <span>Amazon Bedrock RAG, FastMCP tool servers, Loop Engineering &amp; 10x agentic workflows.</span>
+            </a>
+            <a href="../services/#finops">
+              <strong>04 · Cloud FinOps &amp; Commercial Licensing</strong>
+              <span>22% cloud spend recovery, Oracle/SQL core optimization, tokener LLM unit economics.</span>
+            </a>
+            <a href="../consultancy/">
+              <strong>Executive Advisory &amp; Fractional Principal</strong>
+              <span>M&amp;A technical due diligence, architecture rescue, and board-grade roadmaps.</span>
+            </a>
+            <a href="../startups/">
+              <strong>High-Growth Startups &amp; AWS Activate</strong>
+              <span>SOC 2 / HIPAA-ready foundations in 3 weeks with credit-aligned co-funding.</span>
+            </a>
+          </div>
+        </div>
+
+  <div class="wrap wrap--narrow">
+    <section class="article-head">
+      <div class="crumbs"><a href="../">Home</a> &nbsp;/&nbsp; <a href="../blog/">Insights</a> &nbsp;/&nbsp; Kubernetes Cost Optimization</div>
+      <div class="eyebrow">Kubernetes · EKS</div>
+      <h1>Kubernetes Cost Optimization: <span class="grad">Closing the Request Gap on Amazon EKS</span></h1>
+      <p class="lede">The EKS control plane is a rounding error. The real bill is the EC2 fleet underneath it, and that fleet is sized by what your pods <em>ask for</em>, not by what they use. Everything below follows from that one fact.</p>
+      <p class="shared">Shared by <b>Archeon Cloud LLC</b> · Principal AWS Partner Consultancy (New York · London · Dubai · Istanbul). To run this playbook against your own AWS estate, write to <a href="mailto:master@archeoncloud.com" style="color:var(--blue); text-decoration:none;">master@archeoncloud.com</a>.</p>
+    </section>
+
+    <div class="article-shell">
+<article class="article">
+      <h2>The request gap is the whole game</h2>
+      <p>Kubernetes schedules on <strong>requests</strong>. The autoscaler adds nodes when requested CPU and memory no longer fit. Your cloud bill, therefore, is a function of the sum of requests across the cluster, not the sum of actual usage. In a typical cluster we audit, actual utilisation sits far below what has been requested. That gap is paid for in full, every hour, and it is invisible in Cost Explorer.</p>
+      <p>Three layers stack on top of each other:</p>
+      <ol>
+        <li><strong>Usage → Request gap:</strong> pods request more than they use.</li>
+        <li><strong>Request → Node gap:</strong> nodes are not packed tightly, leaving stranded capacity.</li>
+        <li><strong>Node → Price gap:</strong> the nodes you do run are bought at the wrong price (On-Demand, wrong family, no commitments).</li>
+      </ol>
+      <p>Optimise in that order. Cheaper nodes that are still mostly empty are still waste.</p>
+
+      <h2>Layer 1: right-size requests</h2>
+      <h3>Measure before you cut</h3>
+      <p>Run the <strong>Vertical Pod Autoscaler in recommendation-only mode</strong> (<code>updateMode: "Off"</code>) across every namespace, and compare its targets with the current requests. Tools such as Goldilocks give the same view with a dashboard. Look for the classic patterns:</p>
+      <ul>
+        <li>Requests copied from a Helm chart default and never revisited.</li>
+        <li>CPU requests set to the same value as limits “to be safe”.</li>
+        <li>Java services requesting memory for a heap that was tuned down years ago.</li>
+        <li>Sidecars (service mesh, log shippers) requesting as much as the application.</li>
+      </ul>
+
+      <h3>Set requests to P95 usage, plus headroom, and drop CPU limits</h3>
+      <p>Memory requests should sit near real peak usage with a safety margin, because memory is not compressible and OOM kills are outages. CPU is compressible: set requests to a realistic P95 and, for most services, <strong>remove CPU limits entirely</strong>. CPU limits cause throttling on burst without saving a cent, since the node is billed regardless.</p>
+      <pre><code>resources:
+  requests:
+    cpu: "250m"        # P95 of observed usage
+    memory: "512Mi"    # peak usage + ~20% headroom
+  limits:
+    memory: "512Mi"    # memory limit == request keeps QoS predictable
+    # no CPU limit: let bursts use idle cycles on the node</code></pre>
+
+      <h3>Enforce defaults with LimitRange and ResourceQuota</h3>
+      <p>Every namespace needs a <code>LimitRange</code> so pods without requests get sane defaults, and a <code>ResourceQuota</code> so a single team cannot silently double the cluster. Requests are a budget; treat them like one.</p>
+
+      <h2>Layer 2: pack the nodes</h2>
+      <h3>Give the scheduler room to consolidate</h3>
+      <ul>
+        <li><strong>PodDisruptionBudgets</strong> on every Deployment. Without them, autoscalers will not evict pods to drain a half-empty node, and consolidation never happens.</li>
+        <li><strong>Avoid unnecessary anti-affinity</strong> and <code>topologySpreadConstraints</code> with <code>DoNotSchedule</code>. Prefer <code>ScheduleAnyway</code> unless the availability requirement is real.</li>
+        <li><strong>Watch DaemonSet overhead.</strong> Ten DaemonSets on a small node can consume a third of it before any workload lands. Bigger nodes dilute that tax; fewer DaemonSets remove it.</li>
+        <li><strong>Reduce pod count per service</strong> where fewer, larger replicas serve the same load. Every replica carries fixed sidecar and runtime overhead.</li>
+      </ul>
+
+      <h3>Let the autoscaler choose the node</h3>
+      <p>Static managed node groups with one instance type are the enemy of bin packing. Replace them with <a href="../blog/karpenter-cost-optimization.html">Karpenter</a>, which provisions the cheapest node that fits the pending pods and actively consolidates underutilised ones. If you must keep Cluster Autoscaler, use multiple node groups with mixed instance types and enable the <code>least-waste</code> expander.</p>
+
+      <h2>Layer 3: buy compute well</h2>
+      <table>
+        <thead><tr><th>Lever</th><th>Applies to</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Spot</strong></td><td>Stateless, replicated, batch</td><td>Diversify across many instance types and AZs; handle interruptions with the Node Termination Handler or Karpenter’s native handling.</td></tr>
+          <tr><td><strong>Graviton (arm64)</strong></td><td>Almost everything with a multi-arch image</td><td>Better price-performance than x86 equivalents. Build multi-arch images once; mix architectures in the same cluster.</td></tr>
+          <tr><td><strong>Savings Plans</strong></td><td>The measured On-Demand baseline</td><td>Compute Savings Plans follow the workload across families and regions. Cover the floor, never the peak.</td></tr>
+          <tr><td><strong>Newer generations</strong></td><td>Everything</td><td>Each generation is typically cheaper per unit of work. Stop pinning to m5 out of habit.</td></tr>
+        </tbody>
+      </table>
+      <blockquote>Order matters: right-size first, pack second, commit last. A Savings Plan bought against an inflated baseline locks the waste in for three years.</blockquote>
+
+      <h2>Non-production is where the easy money is</h2>
+      <ul>
+        <li><strong>Scale dev and staging to zero outside working hours.</strong> KEDA cron scalers or a simple scheduled job that sets replicas to zero, plus a node autoscaler that removes empty nodes, removes a large share of non-production spend overnight.</li>
+        <li><strong>Ephemeral preview environments</strong> per pull request that are destroyed on merge beat long-lived “QA2” clusters every time.</li>
+        <li><strong>One cluster, many namespaces</strong> for non-production. The per-cluster control plane fee is small, but the duplicated DaemonSets, ingress controllers and observability stacks are not.</li>
+        <li><strong>Spot everywhere</strong> in non-production. Interruptions there are free chaos engineering.</li>
+      </ul>
+
+      <h2>The network and storage lines nobody looks at</h2>
+      <ul>
+        <li><strong>NAT Gateway data processing.</strong> Image pulls, S3 reads and package downloads through NAT add up fast. Add VPC endpoints for S3, ECR and the AWS APIs you use, and use ECR pull-through caches for public images.</li>
+        <li><strong>Cross-AZ traffic.</strong> Chatty services spread across three AZs pay for every byte between them. Enable <strong>Topology Aware Routing</strong> so Services prefer same-zone endpoints, and colocate tightly coupled workloads.</li>
+        <li><strong>Load balancers.</strong> One ALB per Ingress is the default and it is expensive. Use ingress grouping with the AWS Load Balancer Controller to share ALBs.</li>
+        <li><strong>EBS volumes.</strong> Migrate gp2 to gp3, shrink oversized PVCs, and find orphaned volumes from deleted StatefulSets. Set a reclaim policy you actually mean.</li>
+        <li><strong>Observability.</strong> High-cardinality metrics and debug logs in CloudWatch or a SaaS vendor can rival compute spend. Sample, aggregate and drop labels you never query.</li>
+      </ul>
+
+      <h2>Autoscaling the workloads themselves</h2>
+      <p>Node autoscaling only removes nodes that are empty. Workload autoscaling is what empties them.</p>
+      <ul>
+        <li><strong>HPA</strong> on CPU or memory for request-driven services, with sensible <code>minReplicas</code>. Three replicas for availability, not ten for comfort.</li>
+        <li><strong>KEDA</strong> for event-driven workloads: scale consumers on queue depth and, crucially, <strong>scale to zero</strong> when the queue is empty.</li>
+        <li><strong>Jobs and CronJobs</strong> with <code>ttlSecondsAfterFinished</code> so finished pods do not hold requests.</li>
+      </ul>
+
+      <h2>Make cost visible where engineers work</h2>
+      <p>Cost Explorer shows instances, not teams. Install <strong>Kubecost or OpenCost</strong>, or enable <strong>split cost allocation data</strong> for EKS in the Cost and Usage Report, so spend is attributed to namespaces and labels. Then put a cost panel next to the latency panel on every team dashboard. Engineers optimise what they can see.</p>
+
+      <div class="callout">
+        <h4>First-month checklist</h4>
+        <ul>
+          <li>Deploy VPA in recommendation mode; fix the ten worst request offenders.</li>
+          <li>Remove CPU limits; set memory request equal to limit.</li>
+          <li>Add PodDisruptionBudgets everywhere; relax hard anti-affinity.</li>
+          <li>Replace static node groups with Karpenter; enable consolidation.</li>
+          <li>Build multi-arch images and move to Graviton where possible.</li>
+          <li>Spot for all non-production and for stateless production.</li>
+          <li>Scale non-production to zero at night; scale queue consumers to zero when idle.</li>
+          <li>Add VPC endpoints, share ALBs, enable Topology Aware Routing.</li>
+          <li>Install Kubecost or OpenCost; show cost per namespace to the teams.</li>
+          <li>Only then: buy a Compute Savings Plan for the new, smaller baseline.</li>
+        </ul>
+      </div>
+
+      <p>Kubernetes does not make cloud expensive. Unmanaged requests do. Close the request gap and the rest of the bill follows.</p>
+    </article>
+
+    <div class="article-foot">
+      <p class="shared">Shared by <b>Archeon Cloud LLC</b> · Principal AWS Partner Consultancy (New York · London · Dubai · Istanbul). To run this playbook against your own AWS estate, write to <a href="mailto:master@archeoncloud.com" style="color:var(--blue); text-decoration:none;">master@archeoncloud.com</a>.</p>
+
+      <div class="related">
+        <h3>Related reading</h3>
+        <div class="grid grid-2" style="margin-top:0;">
+<a class="card card--link post-card" href="../blog/ai-ml-cost-optimization-aws.html" style="min-height:auto;"><span class="kicker">AI/ML · FinOps</span><h3 style="font-size:17px;">AI/ML Cost Optimization on AWS: Where the GPU Money Really Goes</h3><span class="more">Read →</span></a>
+<a class="card card--link post-card" href="../blog/karpenter-cost-optimization.html" style="min-height:auto;"><span class="kicker">Karpenter · Spot</span><h3 style="font-size:17px;">Karpenter Cost Optimization: NodePools That Actually Save Money</h3><span class="more">Read →</span></a>
+</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Institutional Footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="../assets/logo.svg" alt="Archeon Cloud" />
+        <p>Principal-led AWS Partner Network (APN) consultancy &amp; Open IP engineering lab. Cloud foundations, 300k rec/sec data platforms, Data Vault 2.0, Agentic AI, and FinOps.</p>
+        <p style="margin-top: 10px; font-size: 0.78rem; color: var(--silver);"><strong>New York · London · Dubai · Istanbul</strong></p>
+      </div>
+      <div>
+        <h4>Capabilities</h4>
+        <ul>
+          <li><a href="../services/#architecture">Cloud Foundation &amp; DevSecOps</a></li>
+          <li><a href="../services/#streaming">Streaming &amp; Data Vault 2.0</a></li>
+          <li><a href="../services/#genai">Agentic AI &amp; Bedrock RAG</a></li>
+          <li><a href="../services/#finops">Cloud &amp; Licensing FinOps</a></li>
+          <li><a href="../poc/">4-Week Proof Lab</a></li>
+          <li><a href="../consultancy/">Executive Advisory</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Open IP (ACE)</h4>
+        <ul>
+          <li><a href="../product/tokener/">tokener LLM FinOps</a></li>
+          <li><a href="../services/#genai">Loop Engineering &amp; FastMCP</a></li>
+          <li><a href="../services/#data-vault">automate-dv-kimball (dbt)</a></li>
+          <li><a href="../services/#streaming">PyArrow Streaming Core</a></li>
+          <li><a href="../startups/">Startups &amp; AWS Activate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Industries &amp; Proof</h4>
+        <ul>
+          <li><a href="../case-studies/">7 Enterprise Case Studies</a></li>
+          <li><a href="../industries/#telecom">Telecom &amp; Media</a></li>
+          <li><a href="../industries/#iiot">Industrial IoT &amp; Rail</a></li>
+          <li><a href="../industries/#fintech">Banking &amp; FinTech</a></li>
+          <li><a href="../industries/#pe-saas">PE, M&amp;A &amp; B2B SaaS</a></li>
+          <li><a href="../industries/#govtech">Public Sector &amp; Defense</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company &amp; Insights</h4>
+        <ul>
+          <li><a href="../about/">About &amp; Principal Pedigree</a></li>
+          <li><a href="../blog/">Engineering Playbooks</a></li>
+          <li><a href="../contact/">Book Architecture Review</a></li>
+          <li><a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Archeon Cloud LLC · AWS Partner Network (APN) Consulting Partner · All rights reserved.</span>
+      <span>Built by principals, for engineers · <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

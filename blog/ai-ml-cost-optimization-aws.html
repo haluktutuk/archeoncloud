@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI/ML Cost Optimization on AWS: Where the GPU Money Really Goes - Archeon Cloud</title>
+  <meta name="description" content="A practical playbook for cutting AWS machine learning spend: training on Spot and Trainium, inference right-sizing, Bedrock token economics, storage hygiene and the FinOps metrics that matter." />
+  <link rel="canonical" href="https://archeoncloud.com/blog/ai-ml-cost-optimization-aws.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="AI/ML Cost Optimization on AWS: Where the GPU Money Really Goes" />
+  <meta property="og:description" content="A practical playbook for cutting AWS machine learning spend: training on Spot and Trainium, inference right-sizing, Bedrock token economics, storage hygiene and the FinOps metrics that matter." />
+  <meta property="og:url" content="https://archeoncloud.com/blog/ai-ml-cost-optimization-aws.html" />
+  <meta property="og:image" content="https://archeoncloud.com/assets/mark.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="aurora"></div>
+  <div class="grid-fade"></div>
+
+  <!-- Top Institutional APN Utility Bar -->
+<div class="top-bar">
+  <div class="top-bar__inner">
+    <div class="top-bar__left">
+      <span class="top-bar__pill"><span class="pulse"></span> AWS Partner Network (APN) Consultancy</span>
+      <span>Principal-Only Execution</span>
+      <span class="top-bar__sep">·</span>
+      <span>New York · London · Dubai · Istanbul</span>
+    </div>
+    <div class="top-bar__right">
+      <a href="../product/tokener/">Open IP: tokener LLM FinOps</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../case-studies/">7 Verified Enterprise Case Studies</a>
+      <span class="top-bar__sep">·</span>
+      <a href="../poc/">4-Week Fixed-Scope Proof Lab</a>
+      <span class="top-bar__sep">·</span>
+      <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky Header & Mega-Menu Navigation -->
+<div class="site-header-shell">
+  <div class="wrap">
+    <header class="site">
+      <a class="brand" href="../" aria-label="Archeon Cloud home">
+        <img src="../assets/logo.svg" alt="Archeon Cloud - Principal AWS Consultancy" />
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+      <label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation"><span></span></label>
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-item">
+          <a href="../services/">
+            Capabilities
+            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+          </a>
+          <div class="nav-drop nav-drop--wide">
+            <div class="nav-drop__head">4 Core Capability Practices &amp; Advisory</div>
+            <a href="../services/#architecture">
+              <strong>01 · Cloud Foundation &amp; DevSecOps</strong>
+              <span>Multi-account AWS Control Tower, Terraform IaC, Golden AMIs, zero-downtime migration.</span>
+            </a>
+            <a href="../services/#streaming">
+              <strong>02 · High-Throughput Data &amp; Data Vault 2.0</strong>
+              <span>300k rec/sec PyArrow streaming, dbt Hybrid Data Vault 2.0, Iceberg &amp; Snowflake lakehouses.</span>
+            </a>
+            <a href="../services/#genai">
+              <strong>03 · Agentic AI &amp; Developer Platforms</strong>
+              <span>Amazon Bedrock RAG, FastMCP tool servers, Loop Engineering &amp; 10x agentic workflows.</span>
+            </a>
+            <a href="../services/#finops">
+              <strong>04 · Cloud FinOps &amp; Commercial Licensing</strong>
+              <span>22% cloud spend recovery, Oracle/SQL core optimization, tokener LLM unit economics.</span>
+            </a>
+            <a href="../consultancy/">
+              <strong>Executive Advisory &amp; Fractional Principal</strong>
+              <span>M&amp;A technical due diligence, architecture rescue, and board-grade roadmaps.</span>
+            </a>
+            <a href="../startups/">
+              <strong>High-Growth Startups &amp; AWS Activate</strong>
+              <span>SOC 2 / HIPAA-ready foundations in 3 weeks with credit-aligned co-funding.</span>
+            </a>
+          </div>
+        </div>
+
+  <div class="wrap wrap--narrow">
+    <section class="article-head">
+      <div class="crumbs"><a href="../">Home</a> &nbsp;/&nbsp; <a href="../blog/">Insights</a> &nbsp;/&nbsp; AI/ML Cost Optimization</div>
+      <div class="eyebrow">AI/ML · FinOps</div>
+      <h1>AI/ML Cost Optimization on AWS: <span class="grad">Where the GPU Money Really Goes</span></h1>
+      <p class="lede">Most machine learning bills are not dominated by the model you are proud of. They are dominated by the GPU that sat idle, the endpoint nobody scaled down and the dataset copied four times. This is the playbook we run first.</p>
+      <p class="shared">Shared by <b>Archeon Cloud LLC</b> · Principal AWS Partner Consultancy (New York · London · Dubai · Istanbul). To run this playbook against your own AWS estate, write to <a href="mailto:master@archeoncloud.com" style="color:var(--blue); text-decoration:none;">master@archeoncloud.com</a>.</p>
+    </section>
+
+    <div class="article-shell">
+<article class="article">
+      <h2>Start with the shape of the bill, not the model</h2>
+      <p>Before touching a single instance type, split your ML spend into four buckets. In almost every account we review the split looks roughly the same and the surprise is always in the last bucket.</p>
+      <table>
+        <thead><tr><th>Bucket</th><th>Typical services</th><th>What usually goes wrong</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Training</strong></td><td>SageMaker Training, EC2 P/G/Trn instances, EKS GPU nodes</td><td>On-Demand GPUs for jobs that could checkpoint; oversized instance families; failed jobs re-run from scratch.</td></tr>
+          <tr><td><strong>Inference</strong></td><td>SageMaker Endpoints, EKS, Lambda, Bedrock</td><td>Endpoints sized for peak and never scaled down; one model per endpoint; no autoscaling in non-production.</td></tr>
+          <tr><td><strong>Data &amp; storage</strong></td><td>S3, EBS, FSx for Lustre, EFS, data transfer</td><td>Duplicate datasets, hot storage for cold data, FSx file systems left running after training, cross-region egress.</td></tr>
+          <tr><td><strong>Everything else</strong></td><td>Notebooks, Studio, dev clusters, logs, experiment tracking</td><td>Notebook instances running 24/7, GPU dev boxes “for later”, CloudWatch ingestion of debug logs.</td></tr>
+        </tbody>
+      </table>
+      <p>Tag ruthlessly: <code>ml:project</code>, <code>ml:stage</code> (train / infer / dev) and <code>ml:owner</code> on every resource. Without the stage tag you cannot tell whether your GPU spend is producing models or producing heat.</p>
+
+      <h2>Training: pay for compute only while it computes</h2>
+      <h3>Use Spot with checkpointing, always</h3>
+      <p>Training is the ideal Spot workload because it is interruptible by design if you checkpoint. SageMaker Managed Spot Training handles the interruption and restart for you and regularly delivers savings of well over half versus On-Demand. On EKS or raw EC2, write checkpoints to S3 every N steps and let the job resume from the last one. The rule is simple: <strong>if a training job cannot survive an interruption, it is a reliability bug, not a reason to pay On-Demand.</strong></p>
+
+      <h3>Pick the smallest accelerator that keeps the GPU busy</h3>
+      <p>Teams default to the biggest P-family instance because it feels safe. Look at GPU utilisation first. If a P4d or P5 spends most of its time waiting on the data loader, a G5 or G6 instance with faster storage would finish in similar wall-clock time at a fraction of the price. Profile before you provision.</p>
+
+      <h3>Evaluate AWS Trainium for recurring jobs</h3>
+      <p>For workloads you retrain on a schedule, Trn1 instances are frequently the cheapest way to get a given number of training tokens through the door. The porting effort with the Neuron SDK is real but it is paid once and the discount is paid every run. It is a strong PoC candidate: we typically prove it on one model in two weeks before touching the rest of the fleet.</p>
+
+      <h3>Fix the boring efficiency losses</h3>
+      <ul>
+        <li><strong>Mixed precision</strong> (bf16 / fp16) is often a near free throughput win on modern GPUs.</li>
+        <li><strong>Data loading</strong> from S3 through FSx for Lustre or the S3 Express One Zone class keeps the accelerator fed. Then delete the FSx file system when the job ends; it is billed per provisioned GB, not per use.</li>
+        <li><strong>Distributed training</strong> should be justified by a scaling test. Eight GPUs at 40% efficiency cost more than two GPUs at 90%.</li>
+        <li><strong>Hyper-parameter sweeps</strong> deserve early stopping. Kill runs that are clearly losing after the first evaluation.</li>
+      </ul>
+
+      <h2>Inference: the silent majority of most ML bills</h2>
+      <p>Training is spiky and visible. Inference is flat, permanent and easy to forget. Over a year it is usually the larger number.</p>
+
+      <h3>Match the endpoint type to the traffic shape</h3>
+      <table>
+        <thead><tr><th>Traffic</th><th>Best fit</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Steady, latency-sensitive</td><td>Real-time endpoint with autoscaling, Savings Plans</td><td>Predictable base load is what commitments are for.</td></tr>
+          <tr><td>Spiky or low volume</td><td>SageMaker Serverless Inference</td><td>You pay per invocation and compute time, with zero cost at idle.</td></tr>
+          <tr><td>Large payloads, tolerant of seconds</td><td>Asynchronous Inference</td><td>Queues requests and can scale the instance count to zero.</td></tr>
+          <tr><td>Offline scoring</td><td>Batch Transform on Spot-friendly schedules</td><td>No endpoint needs to exist between runs.</td></tr>
+          <tr><td>Many small models</td><td>Multi-model endpoints</td><td>Hundreds of models share one fleet instead of one instance each.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Right-size the accelerator, then remove it</h3>
+      <p>A large share of production models do not need a GPU at all once quantised and compiled. Try CPU inference on Graviton with ONNX Runtime, or AWS Inferentia (Inf2) for transformer workloads, before defaulting to G5. Measure cost per thousand inferences at your latency target. That single metric usually settles the argument.</p>
+
+      <h3>Scale to zero wherever the business allows</h3>
+      <p>Staging and development endpoints should not exist outside working hours. Use scheduled scaling or delete and recreate from infrastructure as code. A GPU endpoint left running over a weekend is the single most common line item we remove in a first review.</p>
+
+      <h2>Generative AI: manage tokens like you manage instances</h2>
+      <p>Amazon Bedrock moves the cost unit from hours to tokens, and most teams have never budgeted in tokens before. The levers are different but the discipline is the same.</p>
+      <ul>
+        <li><strong>Model tiering.</strong> Route by task difficulty. A fast, small model for classification, extraction and routing; a frontier model only for the steps that need reasoning. A simple router with an evaluation set behind it routinely cuts spend dramatically with no measurable quality loss.</li>
+        <li><strong>Prompt caching.</strong> Long system prompts, tool definitions and retrieved documents that repeat across calls should be cached. Cached input tokens are billed at a steep discount.</li>
+        <li><strong>Batch inference.</strong> Anything that does not need a synchronous answer, such as nightly summarisation, enrichment or evaluation runs, belongs in Bedrock batch mode at roughly half the on-demand token price.</li>
+        <li><strong>Provisioned Throughput only with proof.</strong> It is a commitment. Buy it when your steady-state token volume is measured, not forecast.</li>
+        <li><strong>RAG hygiene.</strong> Tighter chunking, fewer retrieved passages and re-ranking reduce input tokens on every request. Retrieval quality and cost improve together.</li>
+        <li><strong>Output limits.</strong> Set <code>max_tokens</code> deliberately. Verbose models are expensive models.</li>
+      </ul>
+      <blockquote>Track cost per successful task, not cost per token. A cheaper model that needs three retries is not cheaper.</blockquote>
+
+      <h2>Data and storage: the bill that never sleeps</h2>
+      <ul>
+        <li>Move datasets to <strong>S3 Intelligent-Tiering</strong> and let lifecycle rules archive old training snapshots.</li>
+        <li>Find the <strong>duplicate copies</strong>. Every team keeps “their” copy of the same raw data. One canonical bucket with versioning beats four.</li>
+        <li>Convert EBS volumes on training and notebook instances to <strong>gp3</strong> and stop paying for io2 IOPS nobody uses.</li>
+        <li>Keep training data in the <strong>same region</strong> as the compute. Cross-region reads during training are a quiet, recurring tax.</li>
+        <li>Add <strong>VPC endpoints</strong> for S3 and ECR so data and container pulls never traverse a NAT Gateway.</li>
+      </ul>
+
+      <h2>The “everything else” bucket</h2>
+      <ul>
+        <li><strong>Notebooks:</strong> enforce auto-shutdown with SageMaker Studio lifecycle configurations or idle-timeout scripts. Nobody trains on a notebook instance at 3 a.m.</li>
+        <li><strong>GPU dev boxes:</strong> replace with on-demand SageMaker Studio spaces or ephemeral EKS pods that disappear at night.</li>
+        <li><strong>Logs and metrics:</strong> debug-level training logs shipped to CloudWatch add up. Sample or ship to S3 instead.</li>
+        <li><strong>Experiments:</strong> set retention on experiment artefacts and model registry versions that never got promoted.</li>
+      </ul>
+
+      <h2>Make it stick: the FinOps layer</h2>
+      <p>Optimisation done once decays in a quarter. Optimisation done as a practice compounds.</p>
+      <ul>
+        <li>Publish <strong>three unit metrics</strong>: cost per training run, cost per thousand inferences, cost per thousand tokens. Review them weekly with the team that can change them.</li>
+        <li>Put <strong>AWS Budgets and Cost Anomaly Detection</strong> on the ML accounts with alerts routed to engineers, not only finance.</li>
+        <li>Cover the measured steady state with <strong>SageMaker Savings Plans</strong> and Compute Savings Plans, and leave the spiky part to Spot and serverless.</li>
+        <li>Give every experiment a <strong>budget and a kill date</strong> at creation time.</li>
+      </ul>
+
+      <div class="callout">
+        <h4>First-week checklist</h4>
+        <ul>
+          <li>Tag every ML resource with project, stage and owner.</li>
+          <li>Move all training jobs to Spot with checkpointing.</li>
+          <li>List every endpoint and delete or schedule the non-production ones.</li>
+          <li>Measure GPU utilisation on training and inference; downsize anything under 50%.</li>
+          <li>Turn on prompt caching and route easy GenAI tasks to a smaller model.</li>
+          <li>Auto-shutdown notebooks; delete idle FSx file systems and duplicate datasets.</li>
+          <li>Define cost per run, per inference and per token, and put them on a dashboard.</li>
+        </ul>
+      </div>
+
+      <p>None of this slows a good team down. Done well, it speeds them up, because the budget freed from idle GPUs is the budget that funds the next experiment.</p>
+    </article>
+
+    <div class="article-foot">
+      <p class="shared">Shared by <b>Archeon Cloud LLC</b> · Principal AWS Partner Consultancy (New York · London · Dubai · Istanbul). To run this playbook against your own AWS estate, write to <a href="mailto:master@archeoncloud.com" style="color:var(--blue); text-decoration:none;">master@archeoncloud.com</a>.</p>
+
+      <div class="related">
+        <h3>Related reading</h3>
+        <div class="grid grid-2" style="margin-top:0;">
+<a class="card card--link post-card" href="../blog/kubernetes-cost-optimization-eks.html" style="min-height:auto;"><span class="kicker">Kubernetes · EKS</span><h3 style="font-size:17px;">Kubernetes Cost Optimization: Closing the Request Gap on Amazon EKS</h3><span class="more">Read →</span></a>
+<a class="card card--link post-card" href="../blog/karpenter-cost-optimization.html" style="min-height:auto;"><span class="kicker">Karpenter · Spot</span><h3 style="font-size:17px;">Karpenter Cost Optimization: NodePools That Actually Save Money</h3><span class="more">Read →</span></a>
+</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Institutional Footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src="../assets/logo.svg" alt="Archeon Cloud" />
+        <p>Principal-led AWS Partner Network (APN) consultancy &amp; Open IP engineering lab. Cloud foundations, 300k rec/sec data platforms, Data Vault 2.0, Agentic AI, and FinOps.</p>
+        <p style="margin-top: 10px; font-size: 0.78rem; color: var(--silver);"><strong>New York · London · Dubai · Istanbul</strong></p>
+      </div>
+      <div>
+        <h4>Capabilities</h4>
+        <ul>
+          <li><a href="../services/#architecture">Cloud Foundation &amp; DevSecOps</a></li>
+          <li><a href="../services/#streaming">Streaming &amp; Data Vault 2.0</a></li>
+          <li><a href="../services/#genai">Agentic AI &amp; Bedrock RAG</a></li>
+          <li><a href="../services/#finops">Cloud &amp; Licensing FinOps</a></li>
+          <li><a href="../poc/">4-Week Proof Lab</a></li>
+          <li><a href="../consultancy/">Executive Advisory</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Open IP (ACE)</h4>
+        <ul>
+          <li><a href="../product/tokener/">tokener LLM FinOps</a></li>
+          <li><a href="../services/#genai">Loop Engineering &amp; FastMCP</a></li>
+          <li><a href="../services/#data-vault">automate-dv-kimball (dbt)</a></li>
+          <li><a href="../services/#streaming">PyArrow Streaming Core</a></li>
+          <li><a href="../startups/">Startups &amp; AWS Activate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Industries &amp; Proof</h4>
+        <ul>
+          <li><a href="../case-studies/">7 Enterprise Case Studies</a></li>
+          <li><a href="../industries/#telecom">Telecom &amp; Media</a></li>
+          <li><a href="../industries/#iiot">Industrial IoT &amp; Rail</a></li>
+          <li><a href="../industries/#fintech">Banking &amp; FinTech</a></li>
+          <li><a href="../industries/#pe-saas">PE, M&amp;A &amp; B2B SaaS</a></li>
+          <li><a href="../industries/#govtech">Public Sector &amp; Defense</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company &amp; Insights</h4>
+        <ul>
+          <li><a href="../about/">About &amp; Principal Pedigree</a></li>
+          <li><a href="../blog/">Engineering Playbooks</a></li>
+          <li><a href="../contact/">Book Architecture Review</a></li>
+          <li><a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Archeon Cloud LLC · AWS Partner Network (APN) Consulting Partner · All rights reserved.</span>
+      <span>Built by principals, for engineers · <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
