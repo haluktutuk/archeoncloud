@@ -1,1044 +1,1197 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Archeon Cloud - Principal AWS Architecture, Data Platforms, Agentic AI &amp; FinOps Consultancy</title>
-<meta name="description" content="Archeon Cloud LLC is a principal-led AWS Partner Network (APN) consultancy and Open IP engineering lab. We architect regulated AWS landing zones, 300k rec/sec zero-copy streaming data platforms, Data Vault 2.0 lakehouses, Agentic AI systems, and FinOps control planes across New York, London, Dubai, and Istanbul." />
-<meta name="keywords" content="AWS Partner Network Consultancy, AWS Landing Zone, Cloud FinOps, Data Vault 2.0, dbt, PyArrow Streaming, Apache Iceberg, Agentic AI, Amazon Bedrock, tokener, LLM Cost Attribution, M&amp;A Cloud Due Diligence" />
-<meta property="og:title" content="Archeon Cloud - Principal AWS Architecture, Data Platforms, Agentic AI &amp; FinOps" />
-<meta property="og:description" content="Hands-on principal AWS architects with a 20+ year fortune-500 track record (Yahoo, Siemens Mobility, Türk Telekom, Bank of America Merrill Lynch, Lockheed Martin). Zero junior handoffs." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://archeoncloud.com/" />
-<meta property="og:image" content="https://archeoncloud.com/assets/logo.svg" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="theme-color" content="#0B1220" />
-<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon.png" />
-<link rel="apple-touch-icon" href="./assets/mark.png" />
-<link rel="canonical" href="https://archeoncloud.com/" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./assets/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archeon Cloud - Principal AWS Architecture, Data Platforms, Agentic AI &amp; FinOps Consultancy</title>
+  <meta name="description"
+    content="Archeon Cloud LLC is a principal-led AWS Partner Network (APN) consultancy and Open IP engineering lab. We architect regulated AWS landing zones, 300k rec/sec zero-copy streaming data platforms, Data Vault 2.0 lakehouses, Agentic AI systems, and FinOps control planes across New York, London, Dubai, and Istanbul." />
+  <meta name="keywords"
+    content="AWS Partner Network Consultancy, AWS Landing Zone, Cloud FinOps, Data Vault 2.0, dbt, PyArrow Streaming, Apache Iceberg, Agentic AI, Amazon Bedrock, tokener, LLM Cost Attribution, M&amp;A Cloud Due Diligence" />
+  <meta property="og:title"
+    content="Archeon Cloud - Principal AWS Architecture, Data Platforms, Agentic AI &amp; FinOps" />
+  <meta property="og:description"
+    content="Hands-on principal AWS architects with a 20+ year fortune-500 track record (Yahoo, Siemens Mobility, Türk Telekom, Bank of America Merrill Lynch, Lockheed Martin). Zero junior handoffs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://archeoncloud.com/" />
+  <meta property="og:image" content="https://archeoncloud.com/assets/logo.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0B1220" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon.png" />
+  <link rel="apple-touch-icon" href="./assets/mark.png" />
+  <link rel="canonical" href="https://archeoncloud.com/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/style.css" />
 </head>
+
 <body>
 
-<div class="aurora" aria-hidden="true"></div>
-<div class="grid-fade" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="grid-fade" aria-hidden="true"></div>
 
-<!-- Top Institutional APN Utility Bar -->
-<div class="top-bar">
-  <div class="top-bar__inner">
-    <div class="top-bar__left">
-      <span class="top-bar__pill"><span class="pulse"></span> AWS Partner Network (APN) Consultancy</span>
-      <span>Principal-Only Execution</span>
-      <span class="top-bar__sep">·</span>
-      <span>New York · London · Dubai · Istanbul</span>
-    </div>
-    <div class="top-bar__right">
-      <a href="./product/tokener/">Open IP: tokener LLM FinOps</a>
-      <span class="top-bar__sep">·</span>
-      <a href="./case-studies/">7 Verified Enterprise Case Studies</a>
-      <span class="top-bar__sep">·</span>
-      <a href="./poc/">4-Week Fixed-Scope Proof Lab</a>
-      <span class="top-bar__sep">·</span>
-      <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a>
+  <!-- Top Institutional APN Utility Bar -->
+  <div class="top-bar">
+    <div class="top-bar__inner">
+      <div class="top-bar__left">
+        <span class="top-bar__pill"><span class="pulse"></span> AWS Partner Network (APN) Consultancy</span>
+        <span>Principal-Only Execution</span>
+        <span class="top-bar__sep">·</span>
+        <span>New York · London · Dubai · Istanbul</span>
+      </div>
+      <div class="top-bar__right">
+        <a href="./product/tokener/">Open IP: tokener LLM FinOps</a>
+        <span class="top-bar__sep">·</span>
+        <a href="./case-studies/">7 Verified Enterprise Case Studies</a>
+        <span class="top-bar__sep">·</span>
+        <a href="./poc/">4-Week Fixed-Scope Proof Lab</a>
+        <span class="top-bar__sep">·</span>
+        <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Sticky Header & Mega-Menu Navigation -->
-<div class="site-header-shell">
-  <div class="wrap">
-    <header class="site">
-      <a class="brand" href="./" aria-label="Archeon Cloud home">
-        <img src="./assets/logo.svg" alt="Archeon Cloud - Principal AWS Consultancy" />
-      </a>
-      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
-      <label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation"><span></span></label>
-      <nav class="nav" aria-label="Primary">
-        <div class="nav-item">
-          <a href="./services/">
-            Capabilities
-            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
-          </a>
-          <div class="nav-drop nav-drop--wide">
-            <div class="nav-drop__head">4 Core Capability Practices &amp; Advisory</div>
-            <a href="./services/#architecture">
-              <strong>01 · Cloud Foundation &amp; DevSecOps</strong>
-              <span>Multi-account AWS Control Tower, Terraform IaC, Golden AMIs, zero-downtime migration.</span>
+  <!-- Sticky Header & Mega-Menu Navigation -->
+  <div class="site-header-shell">
+    <div class="wrap">
+      <header class="site">
+        <a class="brand" href="./" aria-label="Archeon Cloud home">
+          <img src="./assets/logo.svg" alt="Archeon Cloud - Principal AWS Consultancy" />
+        </a>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+        <label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation"><span></span></label>
+        <nav class="nav" aria-label="Primary">
+          <div class="nav-item">
+            <a href="./services/">
+              Capabilities
+              <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2.5 4.5L6 8l3.5-3.5" />
+              </svg>
             </a>
-            <a href="./services/#streaming">
-              <strong>02 · High-Throughput Data &amp; Data Vault 2.0</strong>
-              <span>300k rec/sec PyArrow streaming, dbt Hybrid Data Vault 2.0, Iceberg &amp; Snowflake lakehouses.</span>
-            </a>
-            <a href="./services/#genai">
-              <strong>03 · Agentic AI &amp; Developer Platforms</strong>
-              <span>Amazon Bedrock RAG, FastMCP tool servers, Loop Engineering &amp; 10x agentic workflows.</span>
-            </a>
-            <a href="./services/#finops">
-              <strong>04 · Cloud FinOps &amp; Commercial Licensing</strong>
-              <span>22% cloud spend recovery, Oracle/SQL core optimization, tokener LLM unit economics.</span>
-            </a>
-            <a href="./consultancy/">
-              <strong>Executive Advisory &amp; Fractional Principal</strong>
-              <span>M&amp;A technical due diligence, architecture rescue, and board-grade roadmaps.</span>
-            </a>
-            <a href="./startups/">
-              <strong>High-Growth Startups &amp; AWS Activate</strong>
-              <span>SOC 2 / HIPAA-ready foundations in 3 weeks with credit-aligned co-funding.</span>
-            </a>
+            <div class="nav-drop nav-drop--wide">
+              <div class="nav-drop__head">4 Core Capability Practices &amp; Advisory</div>
+              <a href="./services/#architecture">
+                <strong>01 · Cloud Foundation &amp; DevSecOps</strong>
+                <span>Multi-account AWS Control Tower, Terraform IaC, Golden AMIs, zero-downtime migration.</span>
+              </a>
+              <a href="./services/#streaming">
+                <strong>02 · High-Throughput Data &amp; Data Vault 2.0</strong>
+                <span>300k rec/sec PyArrow streaming, dbt Hybrid Data Vault 2.0, Iceberg &amp; Snowflake
+                  lakehouses.</span>
+              </a>
+              <a href="./services/#genai">
+                <strong>03 · Agentic AI &amp; Developer Platforms</strong>
+                <span>Amazon Bedrock RAG, FastMCP tool servers, Loop Engineering &amp; 10x agentic workflows.</span>
+              </a>
+              <a href="./services/#finops">
+                <strong>04 · Cloud FinOps &amp; Commercial Licensing</strong>
+                <span>22% cloud spend recovery, Oracle/SQL core optimization, tokener LLM unit economics.</span>
+              </a>
+              <a href="./consultancy/">
+                <strong>Executive Advisory &amp; Fractional Principal</strong>
+                <span>M&amp;A technical due diligence, architecture rescue, and board-grade roadmaps.</span>
+              </a>
+              <a href="./startups/">
+                <strong>High-Growth Startups &amp; AWS Activate</strong>
+                <span>SOC 2 / HIPAA-ready foundations in 3 weeks with credit-aligned co-funding.</span>
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div class="nav-item">
-          <a href="./product/tokener/">
-            Open IP &amp; Products
-            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
-          </a>
-          <div class="nav-drop">
-            <div class="nav-drop__head">The Archeon Cloud Engine (ACE)</div>
+          <div class="nav-item">
             <a href="./product/tokener/">
-              <strong>tokener · LLM FinOps Control Plane</strong>
-              <span>Self-hosted pre-stream token budget enforcement &amp; real-time cost attribution for Bedrock, Anthropic &amp; OpenAI.</span>
+              Open IP &amp; Products
+              <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2.5 4.5L6 8l3.5-3.5" />
+              </svg>
             </a>
-            <a href="./services/#genai">
-              <strong>Loop Engineering &amp; AI Skills OS</strong>
-              <span>Reusable FastMCP servers &amp; agentic context protocols delivering 10x developer velocity.</span>
-            </a>
-            <a href="./services/#data-vault">
-              <strong>automate-dv-kimball · Open-Source dbt IP</strong>
-              <span>Automated Raw/Business Data Vault 2.0 to dimensional Kimball star-schema accelerator.</span>
-            </a>
-            <a href="./services/#streaming">
-              <strong>PyArrow C++ Zero-Copy Streaming Core</strong>
-              <span>300k records/sec micro-batch Parquet engine running under 80 MB RAM at 1/10th Spark cost.</span>
-            </a>
+            <div class="nav-drop">
+              <div class="nav-drop__head">The Archeon Cloud Engine (ACE)</div>
+              <a href="./product/tokener/">
+                <strong>tokener · LLM FinOps Control Plane</strong>
+                <span>Self-hosted pre-stream token budget enforcement &amp; real-time cost attribution for Bedrock,
+                  Anthropic &amp; OpenAI.</span>
+              </a>
+              <a href="./services/#genai">
+                <strong>Loop Engineering &amp; Agentic OS</strong>
+                <span>Reusable FastMCP servers &amp; agentic context protocols delivering 10x developer velocity.</span>
+              </a>
+              <a href="./services/#data-vault">
+                <strong>Agentic Data Development Factory</strong>
+                <span>AI Skills &amp; MCP solutions for Data Engineering, Data Architecture, Governance Audit &amp; DB
+                  Performance Tuning.</span>
+              </a>
+              <a href="./services/#streaming">
+                <strong>PyArrow C++ Zero-Copy Streaming Core</strong>
+                <span>300k records/sec micro-batch Parquet engine running under 80 MB RAM at 1/10th Spark cost.</span>
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div class="nav-item">
-          <a href="./industries/">
-            Industries
-            <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
-          </a>
-          <div class="nav-drop nav-drop--wide">
-            <div class="nav-drop__head">Regulated &amp; High-Velocity Verticals</div>
-            <a href="./industries/#telecom">
-              <strong>Telecom &amp; Digital Media</strong>
-              <span>50M+ subscriber DPI telemetry, 20.5B daily records, sub-minute observability.</span>
+          <div class="nav-item">
+            <a href="./industries/">
+              Industries
+              <svg class="nav-caret" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2.5 4.5L6 8l3.5-3.5" />
+              </svg>
             </a>
-            <a href="./industries/#iiot">
-              <strong>Industrial IoT, Rail &amp; Mobility</strong>
-              <span>50M+ daily sensor files, fleet digital twins, predictive maintenance on AWS.</span>
-            </a>
-            <a href="./industries/#fintech">
-              <strong>Banking, Capital Markets &amp; FinTech</strong>
-              <span>PCI-DSS, SOX &amp; GDPR lakehouses, risk analytics, commercial database FinOps.</span>
-            </a>
-            <a href="./industries/#pe-saas">
-              <strong>Private Equity, M&amp;A &amp; B2B SaaS</strong>
-              <span>Post-merger cloud carve-outs, 1,000x CI/CD acceleration, SaaS unit economics.</span>
-            </a>
-            <a href="./industries/#retail">
-              <strong>Global Retail &amp; Supply Chain</strong>
-              <span>Omnichannel demand forecasting, 100% crash elimination via dbt &amp; DuckDB.</span>
-            </a>
-            <a href="./industries/#govtech">
-              <strong>Public Sector, Defense &amp; GovTech</strong>
-              <span>Air-gapped migrations, 80 TB intelligence archives, 19x national tax platform scale.</span>
-            </a>
+            <div class="nav-drop nav-drop--wide">
+              <div class="nav-drop__head">Regulated &amp; High-Velocity Verticals</div>
+              <a href="./industries/#telecom">
+                <strong>Telecom &amp; Digital Media</strong>
+                <span>50M+ subscriber DPI telemetry, 20.5B daily records, sub-minute observability.</span>
+              </a>
+              <a href="./industries/#iiot">
+                <strong>Industrial IoT, Rail &amp; Mobility</strong>
+                <span>50M+ daily sensor files, fleet digital twins, predictive maintenance on AWS.</span>
+              </a>
+              <a href="./industries/#fintech">
+                <strong>Banking, Capital Markets &amp; FinTech</strong>
+                <span>PCI-DSS, SOX &amp; GDPR lakehouses, risk analytics, commercial database FinOps.</span>
+              </a>
+              <a href="./industries/#pe-saas">
+                <strong>Private Equity, M&amp;A &amp; B2B SaaS</strong>
+                <span>Post-merger cloud carve-outs, 1,000x CI/CD acceleration, SaaS unit economics.</span>
+              </a>
+              <a href="./industries/#retail">
+                <strong>Global Retail &amp; Supply Chain</strong>
+                <span>Omnichannel demand forecasting, 100% crash elimination via dbt &amp; DuckDB.</span>
+              </a>
+              <a href="./industries/#govtech">
+                <strong>Public Sector, Defense &amp; GovTech</strong>
+                <span>Air-gapped migrations, 80 TB intelligence archives, 19x national tax platform scale.</span>
+              </a>
+            </div>
           </div>
-        </div>
 
-        <a href="./case-studies/">Case Studies</a>
-        <a href="./poc/">Proof Lab</a>
-        <a href="./blog/">Insights</a>
-        <a href="./about/">About</a>
-      </nav>
-      <a class="nav-cta" href="./contact/">
-        Book Architecture Review
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-    </header>
+          <a href="./case-studies/">Case Studies</a>
+          <a href="./poc/">Proof Lab</a>
+          <a href="./blog/">Insights</a>
+          <a href="./about/">About</a>
+        </nav>
+        <a class="nav-cta" href="./contact/">
+          Book Architecture Review
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
+      </header>
+    </div>
   </div>
-</div>
 
-<div class="wrap">
-  <main>
-    <!-- Hero: Asymmetric Institutional Split + Live Architectural Telemetry Console -->
-    <section class="hero-split">
-      <div>
-        <div class="badge">
-          <span class="dot"></span>
-          <span>AWS Partner Network (APN)</span>
-          <span class="sep">·</span>
-          <span>Principal Architects Only</span>
-          <span class="sep">·</span>
-          <span>Open IP Engineering Lab</span>
-        </div>
-        <h1>
-          Architecting High-Throughput <span class="grad">AWS Cloud, Data &amp; Agentic AI</span> Systems That Pay for Themselves.
-        </h1>
-        <p class="lede">
-          <strong>Archeon Cloud</strong> is a principal-led AWS consultancy and engineering laboratory.
-          We bring a <strong>20+ year Fortune-500 track record</strong> across <strong>Yahoo, Siemens Mobility, Türk Telekom, Bank of America Merrill Lynch, and Lockheed Martin</strong> to design, build, and transfer mission-critical cloud foundations, 300k rec/sec streaming platforms, Data Vault 2.0 lakehouses, and FinOps-governed AI systems with <strong>zero junior handoffs</strong>.
-        </p>
-        <div class="cta-row" style="margin-top: 28px;">
-          <a class="btn" href="./contact/">
-            Book a 30-Minute Principal Review
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-          <a class="btn btn--ghost" href="./case-studies/">Explore 7 Enterprise Case Studies</a>
-          <a class="btn btn--ghost" href="./poc/">4-Week Fixed-Scope Proof Lab</a>
-        </div>
-        <div class="tk-facts" style="margin-top: 22px;">
-          <span>100% Principal-Engineered</span>
-          <span>Terraform / OpenTofu Native</span>
-          <span>Zero Vendor Lock-In</span>
-          <span>Synchronous NY · London · Dubai · Istanbul</span>
-        </div>
-      </div>
-
-      <!-- Right Column: Architectural Telemetry Console -->
-      <aside class="arch-console" aria-label="Archeon Cloud Engine Verified Production Telemetry">
-        <div class="arch-console__bar">
-          <div class="arch-console__dots" aria-hidden="true"><span></span><span></span><span></span></div>
-          <span class="arch-console__title">archeon-cloud-engine // verified-production-benchmarks</span>
-          <span class="arch-console__status">Production Verified</span>
-        </div>
-        <div class="arch-console__body">
-          <div class="arch-console__kpis">
-            <div class="arch-kpi">
-              <span class="arch-kpi__label">PyArrow Zero-Copy Ingest</span>
-              <span class="arch-kpi__val arch-kpi__val--accent">~300,000 rec/s</span>
-              <span class="arch-kpi__sub">&lt;80 MB worker RAM · 1/10th Spark cost</span>
-            </div>
-            <div class="arch-kpi">
-              <span class="arch-kpi__label">CI/CD Release Acceleration</span>
-              <span class="arch-kpi__val arch-kpi__val--green">1,000x Faster</span>
-              <span class="arch-kpi__sub">6 weeks to 6 minutes via Golden AMIs</span>
-            </div>
-            <div class="arch-kpi">
-              <span class="arch-kpi__label">Cloud &amp; Licensing FinOps</span>
-              <span class="arch-kpi__val arch-kpi__val--green">&gt;£1.0M/yr + 22%</span>
-              <span class="arch-kpi__sub">85% core reduction + AWS spend recovery</span>
-            </div>
-            <div class="arch-kpi">
-              <span class="arch-kpi__label">Agentic Loop Engineering</span>
-              <span class="arch-kpi__val arch-kpi__val--accent">10x Velocity</span>
-              <span class="arch-kpi__sub">~60% faster onboarding via FastMCP</span>
-            </div>
-          </div>
-
-          <div class="arch-console__layers">
-            <div class="arch-layer">
-              <span class="arch-layer__tag">L4 · AI &amp; FINOPS</span>
-              <span class="arch-layer__name">Amazon Bedrock + tokener Cost Proxy</span>
-              <span class="arch-layer__meta">Pre-stream enforcement</span>
-            </div>
-            <div class="arch-layer">
-              <span class="arch-layer__tag">L3 · LAKEHOUSE</span>
-              <span class="arch-layer__name">dbt Hybrid Data Vault 2.0 + Iceberg</span>
-              <span class="arch-layer__meta">automate-dv-kimball</span>
-            </div>
-            <div class="arch-layer">
-              <span class="arch-layer__tag">L2 · STREAMING</span>
-              <span class="arch-layer__name">PyArrow C++ + DuckDB + Polars Core</span>
-              <span class="arch-layer__meta">20.5B records / day</span>
-            </div>
-            <div class="arch-layer">
-              <span class="arch-layer__tag">L1 · FOUNDATION</span>
-              <span class="arch-layer__name">AWS Control Tower + Packer Golden AMIs</span>
-              <span class="arch-layer__meta">SOC 2 · HIPAA · PCI-DSS</span>
-            </div>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- Enterprise Pedigree & 6-Column Verified Impact Strip -->
-    <section aria-label="Enterprise Production Pedigree and Audited Metrics">
-      <div class="pedigree-box">
-        <div class="pedigree-logos">
-          <div class="pedigree-logos__label">
-            Principal Leadership Track Record Across Global Enterprises
-          </div>
-          <div class="pedigree-logos__list">
-            <span class="client-chip">Yahoo Inc. <small>$5B M&amp;A</small></span>
-            <span class="client-chip">Siemens Mobility <small>£1.6B Rail</small></span>
-            <span class="client-chip">Türk Telekom <small>50M+ Subs</small></span>
-            <span class="client-chip">Bank of America Merrill Lynch</span>
-            <span class="client-chip">Lockheed Martin <small>UK Met Police</small></span>
-            <span class="client-chip">LC Waikiki</span>
-            <span class="client-chip">Türkiye İş Bankası</span>
-            <span class="client-chip">Crown Agents &amp; Techno Brain</span>
-          </div>
-        </div>
-
-        <div class="kpi-strip">
-          <div class="kpi-cell">
-            <div class="kpi-cell__num">300k/s</div>
-            <div class="kpi-cell__title">Zero-Copy Streaming</div>
-            <div class="kpi-cell__desc">PyArrow C++ ingestion under 80 MB RAM; EL windows cut 14.5h to 3.5h.</div>
-          </div>
-          <div class="kpi-cell">
-            <div class="kpi-cell__num">50M+/day</div>
-            <div class="kpi-cell__title">IIoT Telemetry Scale</div>
-            <div class="kpi-cell__desc">400% ingestion scale-up across 60+ microservices for UK national rail.</div>
-          </div>
-          <div class="kpi-cell">
-            <div class="kpi-cell__num">1,000x</div>
-            <div class="kpi-cell__title">Release Velocity</div>
-            <div class="kpi-cell__desc">6 weeks to 6 minutes via Packer Security-Accredited Golden AMIs.</div>
-          </div>
-          <div class="kpi-cell">
-            <div class="kpi-cell__num">&gt;£1M/yr</div>
-            <div class="kpi-cell__title">Audited FinOps Savings</div>
-            <div class="kpi-cell__desc">85% commercial core reduction + ~22% unattributed AWS spend recovered.</div>
-          </div>
-          <div class="kpi-cell">
-            <div class="kpi-cell__num">100%</div>
-            <div class="kpi-cell__title">Crash Elimination</div>
-            <div class="kpi-cell__desc">15,000+ lines of fragile T-SQL refactored into modular dbt, DuckDB &amp; Polars.</div>
-          </div>
-          <div class="kpi-cell">
-            <div class="kpi-cell__num">10x</div>
-            <div class="kpi-cell__title">Agentic Multiplier</div>
-            <div class="kpi-cell__desc">~60% faster engineer onboarding via Loop Engineering &amp; FastMCP skills.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 1: 4 Core Capability Practices -->
-    <section class="block" id="capabilities">
-      <div class="head-row">
+  <div class="wrap">
+    <main>
+      <!-- Hero: Asymmetric Institutional Split + Live Architectural Telemetry Console -->
+      <section class="hero-split">
         <div>
-          <div class="eyebrow">Capabilities &amp; Practices</div>
-          <h2>Four Principal Engineering Practices. <span class="grad">One Accountable Team.</span></h2>
-          <p class="sub">
-            Instead of scattering generic cloud tasks across junior pods, we organize our firm around four deeply integrated engineering practices where infrastructure, data platforms, agentic AI, and unit economics reinforce one another.
+          <div class="badge">
+            <span class="dot"></span>
+            <span>AWS Partner Network (APN)</span>
+            <span class="sep">·</span>
+            <span>Principal Architects Only</span>
+            <span class="sep">·</span>
+            <span>Open IP Engineering Lab</span>
+          </div>
+          <h1>
+            Architecting High-Throughput <span class="grad">AWS Cloud, Data &amp; Agentic AI</span> Systems That Pay for
+            Themselves.
+          </h1>
+          <p class="lede">
+            <strong>Archeon Cloud</strong> is a principal-led AWS consultancy and engineering laboratory.
+            We bring a <strong>20+ year Fortune-500 track record</strong> across <strong>Yahoo, Siemens Mobility, Türk
+              Telekom, Bank of America Merrill Lynch, and Lockheed Martin</strong> to design, build, and transfer
+            mission-critical cloud foundations, 300k rec/sec streaming platforms, Data Vault 2.0 lakehouses, and
+            FinOps-governed AI systems with <strong>zero junior handoffs</strong>.
           </p>
-        </div>
-        <a class="link" href="./services/">Explore Full Capability Matrix →</a>
-      </div>
-
-      <div class="practice-grid">
-        <!-- Practice 01 -->
-        <article class="practice-card">
-          <div>
-            <div class="practice-card__top">
-              <span class="practice-card__num">Practice 01</span>
-              <span class="practice-card__persona">For CTOs · VPs of Platform · CISOs</span>
-            </div>
-            <h3>Cloud Foundation, Modernization &amp; DevSecOps</h3>
-            <p class="practice-card__desc">
-              Multi-account AWS Control Tower landing zones, immutable Golden AMI release pipelines, and zero-downtime workload migrations engineered for audit readiness from day one.
-            </p>
-            <ul class="practice-card__list">
-              <li><strong>Regulated AWS Landing Zones:</strong> AWS Organizations, SCPs, KMS, GuardDuty, Security Hub, and IAM Identity Center aligned to SOC 2, HIPAA, ISO 27001, and PCI-DSS.</li>
-              <li><strong>Immutable Golden AMI Pipelines:</strong> HashiCorp Packer + Terraform + Jenkins/GitHub Actions pipelines that embed InfoSec accreditation into the image build.</li>
-              <li><strong>Zero-Downtime Cloud &amp; Database Migrations:</strong> Strangler-fig cutovers, AWS DMS + Debezium CDC replication, and post-M&amp;A multi-cloud consolidation.</li>
-            </ul>
+          <div class="cta-row" style="margin-top: 28px;">
+            <a class="btn" href="./contact/">
+              Book a 30-Minute Principal Review
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+            <a class="btn btn--ghost" href="./case-studies/">Explore 7 Enterprise Case Studies</a>
+            <a class="btn btn--ghost" href="./poc/">4-Week Fixed-Scope Proof Lab</a>
           </div>
-          <div>
-            <div class="tech-tags">
-              <span class="tech-tag">AWS Control Tower</span>
-              <span class="tech-tag">Terraform / OpenTofu</span>
-              <span class="tech-tag">EKS / ECS Fargate</span>
-              <span class="tech-tag">Packer Golden AMIs</span>
-              <span class="tech-tag">AWS DMS / CDC</span>
-            </div>
-            <div class="practice-card__foot">
-              <span class="practice-card__metric">Proof: 6 weeks → 6 mins CI/CD (Yahoo $5B M&amp;A)</span>
-              <a class="link" href="./services/#architecture">Practice Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Practice 02 -->
-        <article class="practice-card">
-          <div>
-            <div class="practice-card__top">
-              <span class="practice-card__num">Practice 02</span>
-              <span class="practice-card__persona">For CDOs · VPs of Data · Principal Architects</span>
-            </div>
-            <h3>High-Throughput Data Platforms, Streaming &amp; Data Vault 2.0</h3>
-            <p class="practice-card__desc">
-              Sub-minute streaming ingestion and audit-ready enterprise lakehouses that replace fragile, memory-bloated Spark clusters and monolithic stored procedures with modern zero-copy engines.
-            </p>
-            <ul class="practice-card__list">
-              <li><strong>Zero-Copy Streaming Ingestion:</strong> Custom PyArrow C++ and Polars micro-batch engines sustaining ~300,000 records/sec per node under an 80 MB RAM ceiling.</li>
-              <li><strong>Hybrid Data Vault 2.0 + Kimball Lakehouses:</strong> Automated Raw/Business Vaults paired with dimensional star schemas via dbt, AutomateDV, and our open-source <code>automate-dv-kimball</code> package.</li>
-              <li><strong>Open Table Formats &amp; Warehouse Modernization:</strong> Apache Iceberg on S3, Snowflake, ClickHouse, DuckDB, and Redshift engineered for petabyte-scale query governance.</li>
-            </ul>
-          </div>
-          <div>
-            <div class="tech-tags">
-              <span class="tech-tag">PyArrow C++</span>
-              <span class="tech-tag">dbt / AutomateDV</span>
-              <span class="tech-tag">Apache Iceberg</span>
-              <span class="tech-tag">Snowflake / ClickHouse</span>
-              <span class="tech-tag">DuckDB / Polars</span>
-            </div>
-            <div class="practice-card__foot">
-              <span class="practice-card__metric">Proof: 20.5B records/day · 1/10th Spark CPU/RAM</span>
-              <a class="link" href="./services/#streaming">Practice Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Practice 03 -->
-        <article class="practice-card">
-          <div>
-            <div class="practice-card__top">
-              <span class="practice-card__num">Practice 03</span>
-              <span class="practice-card__persona">For CTOs · Heads of AI · VPs of Engineering</span>
-            </div>
-            <h3>Agentic AI Engineering, GenAI &amp; Developer Platforms</h3>
-            <p class="practice-card__desc">
-              Production-grade Amazon Bedrock RAG systems, custom Model Context Protocol (FastMCP) tool servers, and our proprietary "Loop Engineering" operating model that turns engineering teams into 10x agentic organizations.
-            </p>
-            <ul class="practice-card__list">
-              <li><strong>Enterprise GenAI &amp; Hybrid RAG:</strong> Amazon Bedrock, pgvector, OpenSearch, reranking pipelines, deterministic eval harnesses, and PII/prompt-injection guardrails.</li>
-              <li><strong>FastMCP &amp; Text-to-SQL Data Agents:</strong> Domain-aware MCP servers connecting LLMs safely to enterprise schemas, metadata catalogs, and operational runbooks.</li>
-              <li><strong>"Loop Engineering" Agentic Developer OS:</strong> Standardized AI skills across Claude Code, Cursor, and Gemini CLI that cut engineer onboarding time by ~60%.</li>
-            </ul>
-          </div>
-          <div>
-            <div class="tech-tags">
-              <span class="tech-tag">Amazon Bedrock</span>
-              <span class="tech-tag">FastMCP</span>
-              <span class="tech-tag">Claude Code / Cursor</span>
-              <span class="tech-tag">Hybrid RAG + Evals</span>
-              <span class="tech-tag">LangGraph / Agents</span>
-            </div>
-            <div class="practice-card__foot">
-              <span class="practice-card__metric">Proof: 10x engineering velocity · ~60% faster onboarding</span>
-              <a class="link" href="./services/#genai">Practice Details →</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Practice 04 -->
-        <article class="practice-card">
-          <div>
-            <div class="practice-card__top">
-              <span class="practice-card__num">Practice 04</span>
-              <span class="practice-card__persona">For CFOs · CTOs · Private Equity Operating Partners</span>
-            </div>
-            <h3>Cloud FinOps, Commercial Licensing &amp; LLM Economics</h3>
-            <p class="practice-card__desc">
-              Architectural cost engineering that eliminates waste at the root: from AWS compute/storage rightsizing and Enterprise Discount Program (EDP) negotiations to commercial database core isolation and real-time LLM token budgets.
-            </p>
-            <ul class="practice-card__list">
-              <li><strong>AWS FinOps &amp; Unit-Cost Attribution:</strong> Multi-tenant cost allocation tags, Graviton migration, S3 intelligent tiering, NAT/egress surgery, and Savings Plans optimization.</li>
-              <li><strong>Commercial Database Licensing FinOps:</strong> Hard-isolated virtualization and core consolidation cutting Oracle EE and SQL Server licensing liabilities by up to 85%.</li>
-              <li><strong>Real-Time LLM Cost Governance (tokener):</strong> Pre-stream token budget enforcement per tenant, feature, and developer before runaway prompts hit your AWS or OpenAI invoice.</li>
-            </ul>
-          </div>
-          <div>
-            <div class="tech-tags">
-              <span class="tech-tag">tokener Control Plane</span>
-              <span class="tech-tag">AWS CUR &amp; EDP</span>
-              <span class="tech-tag">Graviton4 / Spot</span>
-              <span class="tech-tag">Oracle / SQL FinOps</span>
-              <span class="tech-tag">Unit Economics</span>
-            </div>
-            <div class="practice-card__foot">
-              <span class="practice-card__metric">Proof: &gt;£1M/yr saved + ~22% cloud spend recovered</span>
-              <a class="link" href="./services/#finops">Practice Details →</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Section 2: Dark Architectural Band - The Archeon Cloud Engine (ACE) & Open IP -->
-    <section class="dark-band" id="open-ip" aria-label="The Archeon Cloud Engine Open IP Portfolio">
-      <div class="head-row">
-        <div>
-          <div class="eyebrow">The Archeon Cloud Engine (ACE) · Open IP Portfolio</div>
-          <h2>We Don't Start From a Blank Editor. <span class="grad">We Deploy Battle-Tested IP.</span></h2>
-          <p class="sub">
-            Traditional consultancies bill you thousands of hours to reinvent boilerplate plumbing.
-            Archeon Cloud embeds four production-hardened accelerators and open-source frameworks directly into your AWS environment with full source-code ownership on day one.
-          </p>
-        </div>
-        <a class="btn btn--dark" href="./product/tokener/">Explore tokener Control Plane →</a>
-      </div>
-
-      <div class="ip-grid">
-        <!-- Featured Open IP 01: tokener -->
-        <div class="ip-card ip-card--featured">
-          <div>
-            <span class="ip-card__badge">ACE MODULE 01 · SELF-HOSTED PRODUCT · MIT OPEN SOURCE</span>
-            <h3 style="margin-top: 10px; font-size: 1.55rem;">tokener: Pre-Stream LLM Cost &amp; FinOps Control Plane</h3>
-            <p style="margin-top: 8px;">
-              Cloud billing dashboards tell you what your AI agents spent yesterday.
-              <strong>tokener</strong> sits in the request path in front of <strong>Amazon Bedrock, Anthropic, and OpenAI</strong>, attributing every token to a tenant, feature, and developer while enforcing hard rolling USD budgets <em>before</em> an upstream stream opens.
-            </p>
-            <ul style="margin-top: 12px;">
-              <li>Sub-millisecond Redis Lua atomic budget checks with automatic fallback model routing (e.g., Opus to Sonnet/Haiku).</li>
-              <li>Recovers ~22% of unattributed AI and cloud spend within the first 30 days of deployment.</li>
-              <li>Deploys inside your own AWS VPC on ECS Fargate or EKS via a single Terraform module; prompts never leave your boundary.</li>
-            </ul>
-            <div class="cta-row" style="justify-content: flex-start; margin-top: 18px;">
-              <a class="btn" href="./product/tokener/">Inspect tokener Architecture →</a>
-              <a class="btn btn--dark" href="https://github.com/archeoncloud/tokener" target="_blank" rel="noopener">View GitHub Repository</a>
-            </div>
-          </div>
-          <div class="ip-mini-console" aria-label="tokener policy enforcement example">
-            <div><span class="c-muted"># 1. Point any Bedrock / Anthropic / OpenAI SDK to tokener inside your VPC</span></div>
-            <div><span class="c-cyan">base_url</span> = <span class="c-green">"https://tokener.internal.company.com/v1"</span></div>
-            <div style="margin-top: 8px;"><span class="c-muted"># 2. Attach business unit-economic context headers</span></div>
-            <div><span class="c-cyan">X-Tokener-Tenant:</span>   <span class="c-amber">"acme-enterprise-eu"</span></div>
-            <div><span class="c-cyan">X-Tokener-Feature:</span>  <span class="c-amber">"rag-contract-auditor"</span></div>
-            <div><span class="c-cyan">X-Tokener-User:</span>     <span class="c-amber">"eng-platform-team"</span></div>
-            <div style="margin-top: 8px;"><span class="c-muted"># 3. Pre-stream atomic policy evaluation (&lt; 0.8ms p99)</span></div>
-            <div><span class="c-green">✓ Policy [tenant-monthly-cap]: $1,420.10 / $2,500.00 (OK)</span></div>
-            <div><span class="c-amber">⚡ Policy [feature-soft-limit]: 82% reached -&gt; auto-downgrade claude-sonnet-4-5</span></div>
+          <div class="tk-facts" style="margin-top: 22px;">
+            <span>100% Principal-Engineered</span>
+            <span>Terraform / OpenTofu Native</span>
+            <span>Zero Vendor Lock-In</span>
+            <span>Synchronous NY · London · Dubai · Istanbul</span>
           </div>
         </div>
 
-        <!-- Open IP 02: Loop Engineering -->
-        <div class="ip-card">
-          <span class="ip-card__badge">ACE MODULE 02 · AGENTIC DEVELOPER OS</span>
-          <h3>Loop Engineering &amp; FastMCP Skill Packs</h3>
-          <p>
-            Our proprietary agentic engineering methodology standardizes repository context, architectural guardrails, and custom <strong>FastMCP</strong> servers across <strong>Claude Code, Cursor, and Gemini CLI</strong>.
-          </p>
-          <ul>
-            <li>Automates complex SQL/dbt refactoring, Terraform module generation, and deterministic data validation loops.</li>
-            <li>Delivers a verified <strong>10x developer productivity multiplier</strong> and cuts new engineer onboarding time by <strong>~60%</strong>.</li>
-            <li>Embedded into your repositories so your engineering team retains the full agentic harness after handover.</li>
-          </ul>
+        <!-- Right Column: Architectural Telemetry Console -->
+        <aside class="arch-console" aria-label="Archeon Cloud Engine Verified Production Telemetry">
+          <div class="arch-console__bar">
+            <div class="arch-console__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="arch-console__title">archeon-cloud-engine // verified-production-benchmarks</span>
+            <span class="arch-console__status">Production Verified</span>
+          </div>
+          <div class="arch-console__body">
+            <div class="arch-console__kpis">
+              <div class="arch-kpi">
+                <span class="arch-kpi__label">PyArrow Zero-Copy Ingest</span>
+                <span class="arch-kpi__val arch-kpi__val--accent">~300,000 rec/s</span>
+                <span class="arch-kpi__sub">&lt;80 MB worker RAM · 1/10th Spark cost</span>
+              </div>
+              <div class="arch-kpi">
+                <span class="arch-kpi__label">CI/CD Release Acceleration</span>
+                <span class="arch-kpi__val arch-kpi__val--green">1,000x Faster</span>
+                <span class="arch-kpi__sub">6 weeks to 6 minutes via Golden AMIs</span>
+              </div>
+              <div class="arch-kpi">
+                <span class="arch-kpi__label">Cloud &amp; Licensing FinOps</span>
+                <span class="arch-kpi__val arch-kpi__val--green">&gt;£1.0M/yr + 22%</span>
+                <span class="arch-kpi__sub">85% core reduction + AWS spend recovery</span>
+              </div>
+              <div class="arch-kpi">
+                <span class="arch-kpi__label">Agentic Loop Engineering</span>
+                <span class="arch-kpi__val arch-kpi__val--accent">10x Velocity</span>
+                <span class="arch-kpi__sub">~60% faster onboarding via FastMCP</span>
+              </div>
+            </div>
+
+            <div class="arch-console__layers">
+              <div class="arch-layer">
+                <span class="arch-layer__tag">L4 · AI &amp; FINOPS</span>
+                <span class="arch-layer__name">Amazon Bedrock + tokener Cost Proxy</span>
+                <span class="arch-layer__meta">Pre-stream enforcement</span>
+              </div>
+              <div class="arch-layer">
+                <span class="arch-layer__tag">L3 · LAKEHOUSE</span>
+                <span class="arch-layer__name">dbt Hybrid Data Vault 2.1 + Iceberg</span>
+                <span class="arch-layer__meta">Agentic Data Dev Factory</span>
+              </div>
+              <div class="arch-layer">
+                <span class="arch-layer__tag">L2 · STREAMING</span>
+                <span class="arch-layer__name">PyArrow C++ + DuckDB + Polars Core</span>
+                <span class="arch-layer__meta">20.5B records / day</span>
+              </div>
+              <div class="arch-layer">
+                <span class="arch-layer__tag">L1 · FOUNDATION</span>
+                <span class="arch-layer__name">AWS Control Tower + Packer Golden AMIs</span>
+                <span class="arch-layer__meta">SOC 2 · HIPAA · PCI-DSS</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Enterprise Pedigree & 6-Column Verified Impact Strip -->
+      <section aria-label="Enterprise Production Pedigree and Audited Metrics">
+        <div class="pedigree-box">
+          <div class="pedigree-logos">
+            <div class="pedigree-logos__label">
+              Principal Leadership Track Record Across Global Enterprises
+            </div>
+            <div class="pedigree-logos__list">
+              <span class="client-chip">Yahoo Inc. <small>$5B M&amp;A</small></span>
+              <span class="client-chip">Siemens Mobility <small>£1.6B Rail</small></span>
+              <span class="client-chip">Türk Telekom <small>50M+ Subs</small></span>
+              <span class="client-chip">Bank of America Merrill Lynch</span>
+              <span class="client-chip">Lockheed Martin <small>UK Met Police</small></span>
+              <span class="client-chip">LC Waikiki</span>
+              <span class="client-chip">Türkiye İş Bankası</span>
+              <span class="client-chip">Crown Agents &amp; Techno Brain</span>
+            </div>
+          </div>
+
+          <div class="kpi-strip">
+            <div class="kpi-cell">
+              <div class="kpi-cell__num">300k/s</div>
+              <div class="kpi-cell__title">Zero-Copy Streaming</div>
+              <div class="kpi-cell__desc">PyArrow C++ ingestion under 80 MB RAM; EL windows cut 14.5h to 3.5h.</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-cell__num">50M+/day</div>
+              <div class="kpi-cell__title">IIoT Telemetry Scale</div>
+              <div class="kpi-cell__desc">400% ingestion scale-up across 60+ microservices for UK national rail.</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-cell__num">1,000x</div>
+              <div class="kpi-cell__title">Release Velocity</div>
+              <div class="kpi-cell__desc">6 weeks to 6 minutes via Packer Security-Accredited Golden AMIs.</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-cell__num">&gt;£1M/yr</div>
+              <div class="kpi-cell__title">Audited FinOps Savings</div>
+              <div class="kpi-cell__desc">85% commercial core reduction + ~22% unattributed AWS spend recovered.</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-cell__num">100%</div>
+              <div class="kpi-cell__title">Crash Elimination</div>
+              <div class="kpi-cell__desc">15,000+ lines of fragile T-SQL refactored into modular dbt, DuckDB &amp;
+                Polars.</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-cell__num">10x</div>
+              <div class="kpi-cell__title">Agentic Multiplier</div>
+              <div class="kpi-cell__desc">~60% faster engineer onboarding via Loop Engineering &amp; FastMCP skills.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1: 4 Core Capability Practices -->
+      <section class="block" id="capabilities">
+        <div class="head-row">
+          <div>
+            <div class="eyebrow">Capabilities &amp; Practices</div>
+            <h2>Four Principal Engineering Practices. <span class="grad">One Accountable Team.</span></h2>
+            <p class="sub">
+              Instead of scattering generic cloud tasks across junior pods, we organize our firm around four deeply
+              integrated engineering practices where infrastructure, data platforms, agentic AI, and unit economics
+              reinforce one another.
+            </p>
+          </div>
+          <a class="link" href="./services/">Explore Full Capability Matrix →</a>
         </div>
 
-        <!-- Open IP 03: automate-dv-kimball -->
-        <div class="ip-card">
-          <span class="ip-card__badge">ACE MODULE 03 · OPEN-SOURCE DBT ACCELERATOR</span>
-          <h3>automate-dv-kimball: Hybrid Data Vault 2.0</h3>
-          <p>
-            Enterprise data teams shouldn't have to choose between the historical auditability of <strong>Data Vault 2.0</strong> and the BI query speed of <strong>Kimball dimensional marts</strong>.
-          </p>
-          <ul>
-            <li>Open-source <code>dbt</code> package that automates Raw Vault and Business Vault hub/link/satellite generation while compiling star-schema Point-in-Time (PIT) and Bridge tables.</li>
-            <li>Accelerates end-to-end enterprise analytics delivery by <strong>30%+</strong> across Snowflake, Iceberg, Redshift, and DuckDB.</li>
-            <li>Proven in telecom, retail, and regulated banking production environments.</li>
-          </ul>
-        </div>
-
-        <!-- Open IP 04: PyArrow Zero-Copy Streaming Core -->
-        <div class="ip-card" style="grid-column: 1 / -1;">
-          <div class="split" style="gap: 28px; align-items: center; margin-top: 0;">
+        <div class="practice-grid">
+          <!-- Practice 01 -->
+          <article class="practice-card">
             <div>
-              <span class="ip-card__badge">ACE MODULE 04 · ULTRA-HIGH-THROUGHPUT STREAMING ENGINE</span>
-              <h3 style="margin-top: 10px;">PyArrow C++ Zero-Copy Streaming Core</h3>
-              <p style="margin-top: 6px;">
-                Built to replace memory-hungry JVM/Spark clusters in extreme telecom and IIoT environments.
-                Our stateful zero-copy C++/PyArrow micro-batch engine ingests <strong>200,000+ raw telemetry files per day (20.5 billion records)</strong> at <strong>~300,000 records/sec per worker</strong> while staying strictly under an <strong>80 MB RAM ceiling</strong>.
+              <div class="practice-card__top">
+                <span class="practice-card__num">Practice 01</span>
+                <span class="practice-card__persona">For CTOs · VPs of Platform · CISOs</span>
+              </div>
+              <h3>Cloud Foundation, Modernization &amp; DevSecOps</h3>
+              <p class="practice-card__desc">
+                Multi-account AWS Control Tower landing zones, immutable Golden AMI release pipelines, and zero-downtime
+                workload migrations engineered for audit readiness from day one.
               </p>
-            </div>
-            <div>
-              <ul>
-                <li><strong>1/10th CPU &amp; RAM Footprint:</strong> Eliminates JVM garbage-collection pauses and out-of-memory cluster crashes completely.</li>
-                <li><strong>4x Faster EL Windows:</strong> Compresses daily batch/micro-batch load windows from 14.5 hours down to 3.5 hours.</li>
-                <li><strong>ACID Lakehouse Ready:</strong> Writes compacted, partitioned Zstd Parquet directly to S3 / Apache Iceberg with sub-minute observability.</li>
+              <ul class="practice-card__list">
+                <li><strong>Regulated AWS Landing Zones:</strong> AWS Organizations, SCPs, KMS, GuardDuty, Security Hub,
+                  and IAM Identity Center aligned to SOC 2, HIPAA, ISO 27001, and PCI-DSS.</li>
+                <li><strong>Immutable Golden AMI Pipelines:</strong> HashiCorp Packer + Terraform + Jenkins/GitHub
+                  Actions pipelines that embed InfoSec accreditation into the image build.</li>
+                <li><strong>Zero-Downtime Cloud &amp; Database Migrations:</strong> Strangler-fig cutovers, AWS DMS +
+                  Debezium CDC replication, and post-M&amp;A multi-cloud consolidation.</li>
               </ul>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3: Executive Role-Based Pathways -->
-    <section class="block" id="pathways">
-      <div class="head-row">
-        <div>
-          <div class="eyebrow">Executive Decision Pathways</div>
-          <h2>Built for the Leaders Who Own <span class="grad">Uptime, Margin, and Audit Risk.</span></h2>
-          <p class="sub">
-            Whether you are scaling a platform post-acquisition, rescuing a fragile data warehouse, or defending cloud gross margins to the board, start with the pathway aligned to your mandate.
-          </p>
-        </div>
-      </div>
-
-      <div class="grid grid-4">
-        <a class="card card--link" href="./services/#architecture">
-          <span class="tag">CTO / VP Eng</span>
-          <div class="ico" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-          </div>
-          <h3>Platform Velocity &amp; Zero-Downtime Scale</h3>
-          <p>Eliminate release bottlenecks with Packer Golden AMIs (6w to 6m), multi-account AWS Control Tower, and Loop Engineering AI workflows.</p>
-          <span class="link" style="margin-top: auto; padding-top: 14px;">CTO Architecture Track →</span>
-        </a>
-
-        <a class="card card--link" href="./services/#streaming">
-          <span class="tag">CDO / VP Data</span>
-          <div class="ico" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
-          </div>
-          <h3>Lakehouse Modernization &amp; Streaming</h3>
-          <p>Replace crashing legacy SQL procedures and costly Spark jobs with dbt Hybrid Data Vault 2.0, Apache Iceberg, and 300k rec/sec PyArrow pipelines.</p>
-          <span class="link" style="margin-top: auto; padding-top: 14px;">CDO Data Track →</span>
-        </a>
-
-        <a class="card card--link" href="./services/#finops">
-          <span class="tag">CFO / FinOps / PE</span>
-          <div class="ico" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          </div>
-          <h3>Cloud Margin Recovery &amp; M&amp;A Due Diligence</h3>
-          <p>Recover ~22% in unattributed AWS &amp; LLM spend, slash commercial Oracle/SQL licensing by 85%, and execute technical carve-outs cleanly.</p>
-          <span class="link" style="margin-top: auto; padding-top: 14px;">CFO &amp; PE Track →</span>
-        </a>
-
-        <a class="card card--link" href="./startups/">
-          <span class="tag">Founders</span>
-          <div class="ico" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
-          </div>
-          <h3>Series A-C Launchpad &amp; AWS Activate</h3>
-          <p>Ship SOC 2 / HIPAA-ready AWS foundations and unit-cost-governed Bedrock AI features in 3 weeks, structured around AWS Activate credits.</p>
-          <span class="link" style="margin-top: auto; padding-top: 14px;">Startup Track →</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Section 4: Featured Verified Enterprise Case Studies -->
-    <section class="block" id="case-studies">
-      <div class="head-row">
-        <div>
-          <div class="eyebrow">Audited Production Evidence</div>
-          <h2>Featured Enterprise Case Studies. <span class="grad">Hard Numbers, Named Pedigree.</span></h2>
-          <p class="sub">
-            Every architectural pattern we recommend has been forged under extreme enterprise load.
-            Explore how our principal architects solved mission-critical throughput, reliability, and FinOps challenges across global leaders.
-          </p>
-        </div>
-        <a class="link" href="./case-studies/">View All 7 Case Studies →</a>
-      </div>
-
-      <div class="case-grid">
-        <!-- Case Study 01: Türk Telekom -->
-        <article class="case-card">
-          <div class="case-card__meta">
-            <span class="case-card__sector">Telecom &amp; DPI Intelligence</span>
-            <span class="case-card__client">Türk Telekom · 50M+ Subscribers</span>
-          </div>
-          <h3>Ingesting 20.5 Billion Daily Records at 1/10th the Footprint of Apache Spark</h3>
-          <div class="case-card__section">
-            <strong>The Challenge</strong>
-            National Deep Packet Inspection (DPI) telemetry generated 200,000+ raw files daily (~20.5B records), overwhelming legacy batch windows (14.5 hours) and causing severe JVM memory pressure.
-          </div>
-          <div class="case-card__section">
-            <strong>The Principal Architecture</strong>
-            Engineered a stateful C++/PyArrow zero-copy streaming Parquet engine paired with a Hybrid Data Vault 2.0 + Kimball lakehouse automated via dbt and FastMCP developer agents.
-          </div>
-          <div class="case-metrics">
-            <div class="case-metric">
-              <b>~300,000/s</b>
-              <span>Records/sec under an 80 MB RAM ceiling</span>
+            <div>
+              <div class="tech-tags">
+                <span class="tech-tag">AWS Control Tower</span>
+                <span class="tech-tag">Terraform / OpenTofu</span>
+                <span class="tech-tag">EKS / ECS Fargate</span>
+                <span class="tech-tag">Packer Golden AMIs</span>
+                <span class="tech-tag">AWS DMS / CDC</span>
+              </div>
+              <div class="practice-card__foot">
+                <span class="practice-card__metric">Proof: 6 weeks → 6 mins CI/CD (Yahoo $5B M&amp;A)</span>
+                <a class="link" href="./services/#architecture">Practice Details →</a>
+              </div>
             </div>
-            <div class="case-metric">
-              <b>14.5h → 3.5h</b>
-              <span>Daily EL window cut at 1/10th CPU/RAM cost</span>
+          </article>
+
+          <!-- Practice 02 -->
+          <article class="practice-card">
+            <div>
+              <div class="practice-card__top">
+                <span class="practice-card__num">Practice 02</span>
+                <span class="practice-card__persona">For CDOs · VPs of Data · Principal Architects</span>
+              </div>
+              <h3>High-Throughput Data Platforms, Streaming &amp; Data Vault 2.1</h3>
+              <p class="practice-card__desc">
+                Sub-minute streaming ingestion and audit-ready enterprise lakehouses powered by our state-of-the-art
+                AI-Assisted / Agentic Data Development Factory.
+              </p>
+              <ul class="practice-card__list">
+                <li><strong>Zero-Copy Streaming Ingestion:</strong> Custom PyArrow C++ and Polars micro-batch engines
+                  sustaining ~300,000 records/sec per node under an 80 MB RAM ceiling.</li>
+                <li><strong>AI-Assisted / Agentic Data Development Factory:</strong> We developed specialized AI Skills
+                  and MCP solutions for Data Engineering, Data Architecture (Hybrid Data Vault 2.1 + Kimball star
+                  schemas via <code>dbt</code>), and Governance development/audit as well as DB Performance Tuning.</li>
+                <li><strong>Open Table Formats &amp; Warehouse Modernization:</strong> Apache Iceberg on S3, Snowflake,
+                  Redshift, ClickHouse, and DuckDB engineered for petabyte-scale query governance.</li>
+              </ul>
+            </div>
+            <div>
+              <div class="tech-tags">
+                <span class="tech-tag">PyArrow C++</span>
+                <span class="tech-tag">dbt Data Vault 2.1</span>
+                <span class="tech-tag">Agentic Data Factory</span>
+                <span class="tech-tag">Snowflake / Redshift</span>
+                <span class="tech-tag">DuckDB / Polars</span>
+              </div>
+              <div class="practice-card__foot">
+                <span class="practice-card__metric">Proof: 20.5B records/day · 1/10th Spark CPU/RAM</span>
+                <a class="link" href="./services/#streaming">Practice Details →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Practice 03 -->
+          <article class="practice-card">
+            <div>
+              <div class="practice-card__top">
+                <span class="practice-card__num">Practice 03</span>
+                <span class="practice-card__persona">For CTOs · Heads of AI · VPs of Engineering</span>
+              </div>
+              <h3>Agentic AI Engineering, GenAI &amp; Developer Platforms</h3>
+              <p class="practice-card__desc">
+                Production-grade Amazon Bedrock RAG systems, custom Model Context Protocol (FastMCP) tool servers, and
+                our proprietary "Loop Engineering" operating model that turns engineering teams into 10x agentic
+                organizations.
+              </p>
+              <ul class="practice-card__list">
+                <li><strong>Enterprise GenAI &amp; Hybrid RAG:</strong> Amazon Bedrock, pgvector, OpenSearch, reranking
+                  pipelines, deterministic eval harnesses, and PII/prompt-injection guardrails.</li>
+                <li><strong>AI Skills &amp; MCP for Data &amp; DB Tuning:</strong> Domain-aware FastMCP servers and AI
+                  skills for Data Modeling, Governance Audit, and automated SQL / Exadata performance remediation.</li>
+                <li><strong>"Loop Engineering" Agentic Developer OS:</strong> Standardized AI skills across Claude Code,
+                  Cursor, and Gemini CLI that cut engineer onboarding time by ~60%.</li>
+              </ul>
+            </div>
+            <div>
+              <div class="tech-tags">
+                <span class="tech-tag">Amazon Bedrock</span>
+                <span class="tech-tag">FastMCP &amp; AI Skills</span>
+                <span class="tech-tag">Claude Code / Cursor</span>
+                <span class="tech-tag">Hybrid RAG + Evals</span>
+                <span class="tech-tag">Loop Engineering</span>
+              </div>
+              <div class="practice-card__foot">
+                <span class="practice-card__metric">Proof: 10x engineering velocity · ~60% faster onboarding</span>
+                <a class="link" href="./services/#genai">Practice Details →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Practice 04 -->
+          <article class="practice-card">
+            <div>
+              <div class="practice-card__top">
+                <span class="practice-card__num">Practice 04</span>
+                <span class="practice-card__persona">For CFOs · CTOs · Private Equity Operating Partners</span>
+              </div>
+              <h3>Cloud FinOps, Exadata Deep Tuning &amp; LLM Economics</h3>
+              <p class="practice-card__desc">
+                Architectural cost and performance engineering that eliminates waste at the root: from 10-node Oracle
+                Exadata RAC deep tuning and commercial core isolation to AWS FinOps and real-time LLM token budgets.
+              </p>
+              <ul class="practice-card__list">
+                <li><strong>Extreme Exadata RAC &amp; DB Performance Tuning:</strong> Uncaged +512 trapped hardware
+                  threads (+40% CPU capacity), deployed DBRM v5.0 (collapsing CPU quantum waits by 99.9%), eliminated
+                  ~18.6 TB/day broadcast temp spills, and cut 130.5h DB time queries to &lt;2 minutes.</li>
+                <li><strong>AWS &amp; Commercial Licensing FinOps:</strong> Hard-isolated virtualization cutting Oracle
+                  EE licensing by 85% (&gt;£1M/yr saved) and recovering ~22% in unattributed AWS cloud spend.</li>
+                <li><strong>Real-Time LLM Cost Governance (tokener):</strong> Pre-stream token budget enforcement per
+                  tenant, feature, and developer before runaway prompts hit your AWS or OpenAI invoice.</li>
+              </ul>
+            </div>
+            <div>
+              <div class="tech-tags">
+                <span class="tech-tag">Exadata RAC / DBRM v5.0</span>
+                <span class="tech-tag">tokener Control Plane</span>
+                <span class="tech-tag">AWS CUR &amp; EDP</span>
+                <span class="tech-tag">Oracle / SQL FinOps</span>
+                <span class="tech-tag">Unit Economics</span>
+              </div>
+              <div class="practice-card__foot">
+                <span class="practice-card__metric">Proof: &gt;£1M/yr saved · +40% Exadata CPU · -5h/day batch</span>
+                <a class="link" href="./services/#finops">Practice Details →</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section 2: Dark Architectural Band - The Archeon Cloud Engine (ACE) & Open IP -->
+      <section class="dark-band" id="open-ip" aria-label="The Archeon Cloud Engine Open IP Portfolio">
+        <div class="head-row">
+          <div>
+            <div class="eyebrow">The Archeon Cloud Engine (ACE) · Open IP Portfolio</div>
+            <h2>We Don't Start From a Blank Editor. <span class="grad">We Deploy Battle-Tested IP.</span></h2>
+            <p class="sub">
+              Traditional consultancies bill you thousands of hours to reinvent boilerplate plumbing.
+              Archeon Cloud embeds four production-hardened accelerators and our state-of-the-art AI-Assisted / Agentic
+              Data Development Factory directly into your AWS environment with full ownership on day one.
+            </p>
+          </div>
+          <a class="btn btn--dark" href="./product/tokener/">Explore tokener Control Plane →</a>
+        </div>
+
+        <div class="ip-grid">
+          <!-- Featured Open IP 01: tokener -->
+          <div class="ip-card ip-card--featured">
+            <div>
+              <span class="ip-card__badge">ACE MODULE 01 · SELF-HOSTED PRODUCT · MIT OPEN SOURCE</span>
+              <h3 style="margin-top: 10px; font-size: 1.55rem;">tokener: Pre-Stream LLM Cost &amp; FinOps Control Plane
+              </h3>
+              <p style="margin-top: 8px;">
+                Cloud billing dashboards tell you what your AI agents spent yesterday.
+                <strong>tokener</strong> sits in the request path in front of <strong>Amazon Bedrock, Anthropic, and
+                  OpenAI</strong>, attributing every token to a tenant, feature, and developer while enforcing hard
+                rolling USD budgets <em>before</em> an upstream stream opens.
+              </p>
+              <ul style="margin-top: 12px;">
+                <li>Sub-millisecond Redis Lua atomic budget checks with automatic fallback model routing (e.g., Opus to
+                  Sonnet/Haiku).</li>
+                <li>Recovers ~22% of unattributed AI and cloud spend within the first 30 days of deployment.</li>
+                <li>Deploys inside your own AWS VPC on ECS Fargate or EKS via a single Terraform module; prompts never
+                  leave your boundary.</li>
+              </ul>
+              <div class="cta-row" style="justify-content: flex-start; margin-top: 18px;">
+                <a class="btn" href="./product/tokener/">Inspect tokener Architecture →</a>
+                <a class="btn btn--dark" href="https://github.com/archeoncloud/tokener" target="_blank"
+                  rel="noopener">View GitHub Repository</a>
+              </div>
+            </div>
+            <div class="ip-mini-console" aria-label="tokener policy enforcement example">
+              <div><span class="c-muted"># 1. Point any Bedrock / Anthropic / OpenAI SDK to tokener inside your
+                  VPC</span></div>
+              <div><span class="c-cyan">base_url</span> = <span
+                  class="c-green">"https://tokener.internal.company.com/v1"</span></div>
+              <div style="margin-top: 8px;"><span class="c-muted"># 2. Attach business unit-economic context
+                  headers</span></div>
+              <div><span class="c-cyan">X-Tokener-Tenant:</span> <span class="c-amber">"acme-enterprise-eu"</span></div>
+              <div><span class="c-cyan">X-Tokener-Feature:</span> <span class="c-amber">"rag-contract-auditor"</span>
+              </div>
+              <div><span class="c-cyan">X-Tokener-User:</span> <span class="c-amber">"eng-platform-team"</span></div>
+              <div style="margin-top: 8px;"><span class="c-muted"># 3. Pre-stream atomic policy evaluation (&lt; 0.8ms
+                  p99)</span></div>
+              <div><span class="c-green">✓ Policy [tenant-monthly-cap]: $1,420.10 / $2,500.00 (OK)</span></div>
+              <div><span class="c-amber">⚡ Policy [feature-soft-limit]: 82% reached -&gt; auto-downgrade
+                  claude-sonnet-4-5</span></div>
             </div>
           </div>
-        </article>
 
-        <!-- Case Study 02: Siemens Mobility -->
-        <article class="case-card">
-          <div class="case-card__meta">
-            <span class="case-card__sector">Industrial IoT &amp; National Rail</span>
-            <span class="case-card__client">Siemens Mobility · £1.6B Contract</span>
+          <!-- Open IP 02: Loop Engineering -->
+          <div class="ip-card">
+            <span class="ip-card__badge">ACE MODULE 02 · AGENTIC DEVELOPER OS</span>
+            <h3>Loop Engineering &amp; FastMCP Paved Road</h3>
+            <p>
+              Our proprietary agentic engineering methodology standardizes containerized developer environments,
+              architectural guardrails, and custom <strong>FastMCP</strong> servers across <strong>Claude Code, Cursor,
+                and Gemini CLI</strong>.
+            </p>
+            <ul>
+              <li>Automates complex SQL/dbt refactoring, Terraform module generation, and deterministic data validation
+                loops.</li>
+              <li>Delivers a verified <strong>10x developer productivity multiplier</strong> and cuts new engineer
+                onboarding time by <strong>~60%</strong>.</li>
+              <li>Embedded into your repositories so your engineering team retains the full agentic harness after
+                handover.</li>
+            </ul>
           </div>
-          <h3>Scaling Real-Time IIoT Rail Telemetry by 400% Across 60+ AWS Microservices</h3>
-          <div class="case-card__section">
-            <strong>The Challenge</strong>
-            High-velocity train sensor fleets across the UK rail network required sub-minute ingestion and predictive maintenance analytics across 50M+ complex nested JSONL telemetry files per day.
+
+          <!-- Open IP 03: AI-Assisted / Agentic Data Development Factory -->
+          <div class="ip-card">
+            <span class="ip-card__badge">ACE MODULE 03 · AGENTIC DATA DEVELOPMENT FACTORY</span>
+            <h3>AI Skills &amp; MCP Suite for Data Architecture, Governance &amp; DB Tuning</h3>
+            <p>
+              We developed specialized <strong>AI Skills and MCP solutions</strong> for Data Engineering, Data
+              Architecture, and Governance development/audit as well as extreme Database Performance Tuning.
+              We support our clients with our state-of-the-art <strong>AI-Assisted / Agentic Data Development
+                Factory</strong>.
+            </p>
+            <ul>
+              <li>Automates Hybrid <strong>Data Vault 2.0/2.1</strong> (Hubs, Links, Satellites, PIT, Bridge) to
+                dimensional <strong>Kimball Star Schemas</strong>, DDL generation, and source-to-target lineage in
+                <code>dbt</code>.</li>
+              <li><strong>AI Skills for DB Performance Tuning:</strong> Automated execution plan forensics, temp-spill
+                &amp; latch eradication, and non-invasive Oracle Exadata / SQL patching.</li>
+              <li><strong>AI Skills for Governance &amp; Quality:</strong> Automated CI/CD quality gates and compliance
+                audits, accelerating analytics delivery by <strong>30%+</strong>.</li>
+            </ul>
           </div>
-          <div class="case-card__section">
-            <strong>The Principal Architecture</strong>
-            Architected an event-driven AWS IoT Core, Kinesis, Lambda, S3, and Snowflake Data Vault 2.0 platform with automated schema evolution and zero-downtime microservice orchestration.
-          </div>
-          <div class="case-metrics">
-            <div class="case-metric">
-              <b>50M+ / day</b>
-              <span>Sensor JSONL files processed continuously</span>
+
+          <!-- Open IP 04: PyArrow Zero-Copy Streaming Core -->
+          <div class="ip-card" style="grid-column: 1 / -1;">
+            <div class="split" style="gap: 28px; align-items: center; margin-top: 0;">
+              <div>
+                <span class="ip-card__badge">ACE MODULE 04 · ULTRA-HIGH-THROUGHPUT STREAMING ENGINE</span>
+                <h3 style="margin-top: 10px;">PyArrow C++ Zero-Copy Streaming Core</h3>
+                <p style="margin-top: 6px;">
+                  Built to replace memory-hungry JVM/Spark clusters in extreme telecom and IIoT environments.
+                  Our stateful zero-copy C++/PyArrow micro-batch engine ingests <strong>200,000+ raw telemetry files per
+                    day (20.5 billion records)</strong> at <strong>~300,000 records/sec per worker</strong> while
+                  staying strictly under an <strong>80 MB RAM ceiling</strong>.
+                </p>
+              </div>
+              <div>
+                <ul>
+                  <li><strong>1/10th CPU &amp; RAM Footprint:</strong> Eliminates JVM garbage-collection pauses and
+                    out-of-memory cluster crashes completely.</li>
+                  <li><strong>4x Faster EL Windows:</strong> Compresses daily batch/micro-batch load windows from 14.5
+                    hours down to 3.5 hours.</li>
+                  <li><strong>ACID Lakehouse Ready:</strong> Writes compacted, partitioned Zstd Parquet directly to S3 /
+                    Apache Iceberg with sub-minute observability.</li>
+                </ul>
+              </div>
             </div>
-            <div class="case-metric">
-              <b>400% Scale</b>
-              <span>Throughput expansion across 60+ microservices</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Executive Role-Based Pathways -->
+      <section class="block" id="pathways">
+        <div class="head-row">
+          <div>
+            <div class="eyebrow">Executive Decision Pathways</div>
+            <h2>Built for the Leaders Who Own <span class="grad">Uptime, Margin, and Audit Risk.</span></h2>
+            <p class="sub">
+              Whether you are scaling a platform post-acquisition, rescuing a fragile data warehouse, or defending cloud
+              gross margins to the board, start with the pathway aligned to your mandate.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <a class="card card--link" href="./services/#architecture">
+            <span class="tag">CTO / VP Eng</span>
+            <div class="ico" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" />
+              </svg>
+            </div>
+            <h3>Platform Velocity &amp; Zero-Downtime Scale</h3>
+            <p>Eliminate release bottlenecks with Packer Golden AMIs (6w to 6m), multi-account AWS Control Tower, and
+              Loop Engineering AI workflows.</p>
+            <span class="link" style="margin-top: auto; padding-top: 14px;">CTO Architecture Track →</span>
+          </a>
+
+          <a class="card card--link" href="./services/#streaming">
+            <span class="tag">CDO / VP Data</span>
+            <div class="ico" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                <ellipse cx="12" cy="5" rx="9" ry="3" />
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
+              </svg>
+            </div>
+            <h3>Lakehouse Modernization &amp; Streaming</h3>
+            <p>Replace crashing legacy SQL procedures and costly Spark jobs with our Agentic Data Development Factory,
+              Data Vault 2.1, and 300k rec/sec PyArrow pipelines.</p>
+            <span class="link" style="margin-top: auto; padding-top: 14px;">CDO Data Track →</span>
+          </a>
+
+          <a class="card card--link" href="./services/#finops">
+            <span class="tag">CFO / FinOps / PE</span>
+            <div class="ico" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <h3>Cloud Margin Recovery &amp; M&amp;A Due Diligence</h3>
+            <p>Recover ~22% in unattributed AWS &amp; LLM spend, slash commercial Oracle/SQL licensing by 85%, and
+              execute technical carve-outs cleanly.</p>
+            <span class="link" style="margin-top: auto; padding-top: 14px;">CFO &amp; PE Track →</span>
+          </a>
+
+          <a class="card card--link" href="./startups/">
+            <span class="tag">Founders</span>
+            <div class="ico" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                <path
+                  d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+              </svg>
+            </div>
+            <h3>Series A-C Launchpad &amp; AWS Activate</h3>
+            <p>Ship SOC 2 / HIPAA-ready AWS foundations and unit-cost-governed Bedrock AI features in 3 weeks,
+              structured around AWS Activate credits.</p>
+            <span class="link" style="margin-top: auto; padding-top: 14px;">Startup Track →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Section 4: Featured Verified Enterprise Case Studies -->
+      <section class="block" id="case-studies">
+        <div class="head-row">
+          <div>
+            <div class="eyebrow">Audited Production Evidence</div>
+            <h2>Featured Enterprise Case Studies. <span class="grad">Hard Numbers, Named Pedigree.</span></h2>
+            <p class="sub">
+              Every architectural pattern we recommend has been forged under extreme enterprise load.
+              Explore how our principal architects solved mission-critical throughput, reliability, and FinOps
+              challenges across global leaders.
+            </p>
+          </div>
+          <a class="link" href="./case-studies/">View All 7 Case Studies →</a>
+        </div>
+
+        <div class="case-grid">
+          <!-- Case Study 01: Türk Telekom -->
+          <article class="case-card">
+            <div class="case-card__meta">
+              <span class="case-card__sector">Telecom · Streaming &amp; Exadata 19c</span>
+              <span class="case-card__client">Türk Telekom · 50M+ Subscribers</span>
+            </div>
+            <h3>300k/s Zero-Copy Streaming, 10-Node Exadata RAC Deep Tuning &amp; Agentic Data Factory</h3>
+            <div class="case-card__section">
+              <strong>The Challenge</strong>
+              Across 50M+ subscribers on an asymmetric 10-node Exadata RAC cluster (896 cores / 1,792 threads, 25B-26B
+              rows/day), the enterprise faced 14.5h EL windows, 512 caged X10M threads, 18.6 TB/day broadcast temp
+              spills, 169.3h of <code>enq: HV</code> lockouts, and 11,635m of sort latch contention.
+            </div>
+            <div class="case-card__section">
+              <strong>The Principal Architecture</strong>
+              Engineered a ~300k rec/sec C++/PyArrow streaming engine (&lt;80 MB RAM), uncaged +512 Exadata threads
+              (+40% CPU), deployed DBRM v5.0 (collapsing CPU quantum waits by 99.9%), eliminated 18.6 TB/day temp spills
+              via non-invasive SQL patches, and rolled out our AI-Assisted / Agentic Data Development Factory.
+            </div>
+            <div class="case-metrics">
+              <div class="case-metric">
+                <b>~300,000/s</b>
+                <span>EL cut 14.5h → 3.5h at 1/10th CPU/RAM cost</span>
+              </div>
+              <div class="case-metric">
+                <b>+40% CPU · -5h</b>
+                <span>+512 threads uncaged · 89.6-98% faster ETL</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Case Study 02: Siemens Mobility -->
+          <article class="case-card">
+            <div class="case-card__meta">
+              <span class="case-card__sector">Industrial IoT &amp; National Rail</span>
+              <span class="case-card__client">Siemens Mobility · £1.6B Contract</span>
+            </div>
+            <h3>Scaling Real-Time IIoT Rail Telemetry by 400% Across 60+ AWS Microservices</h3>
+            <div class="case-card__section">
+              <strong>The Challenge</strong>
+              High-velocity train sensor fleets across the UK rail network required sub-minute ingestion and predictive
+              maintenance analytics across 50M+ complex nested JSONL telemetry files per day.
+            </div>
+            <div class="case-card__section">
+              <strong>The Principal Architecture</strong>
+              Architected an event-driven AWS IoT Core, Kinesis, Lambda, S3, and Snowflake Data Vault 2.0 platform with
+              automated schema evolution and zero-downtime microservice orchestration.
+            </div>
+            <div class="case-metrics">
+              <div class="case-metric">
+                <b>50M+ / day</b>
+                <span>Sensor JSONL files processed continuously</span>
+              </div>
+              <div class="case-metric">
+                <b>400% Scale</b>
+                <span>Throughput expansion across 60+ microservices</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Case Study 03: Yahoo M&A + Enterprise FinOps -->
+          <article class="case-card">
+            <div class="case-card__meta">
+              <span class="case-card__sector">PE Carve-Out &amp; FinOps</span>
+              <span class="case-card__client">Yahoo ($5B M&amp;A) &amp; Tier-1 Banking</span>
+            </div>
+            <h3>1,000x Faster Regulated Releases &amp; &gt;£1M/yr Commercial Licensing FinOps</h3>
+            <div class="case-card__section">
+              <strong>The Challenge</strong>
+              During Yahoo's $5B private equity separation, manual InfoSec sign-offs stalled production releases for 6
+              weeks, while legacy enterprise database estates bled millions in unoptimized core licenses.
+            </div>
+            <div class="case-card__section">
+              <strong>The Principal Architecture</strong>
+              Built Packer Security-Accredited Golden AMI pipelines with Terraform and Jenkins for instant compliance,
+              alongside hard-isolated database virtualization and AWS unit-cost attribution.
+            </div>
+            <div class="case-metrics">
+              <div class="case-metric">
+                <b>6w → 6m</b>
+                <span>1,000x CI/CD release acceleration</span>
+              </div>
+              <div class="case-metric">
+                <b>&gt;£1M/yr</b>
+                <span>Saved via 85% commercial core reduction</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Section 5: 6 Regulated Industry Verticals -->
+      <section class="block" id="industries">
+        <div class="head-row">
+          <div>
+            <div class="eyebrow">Regulated Industry Verticals</div>
+            <h2>Domain-Fluent AWS Architecture Across <span class="grad">Six Mission-Critical Sectors.</span></h2>
+            <p class="sub">
+              Generic cloud templates fail when they collide with sector-specific telemetry rates, data sovereignty
+              laws, and regulatory audits.
+              We pair AWS services directly with the compliance frameworks of your industry.
+            </p>
+          </div>
+          <a class="link" href="./industries/">Inspect Regulatory Control Matrix →</a>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="vertical-card">
+            <div class="vertical-card__head">
+              <h3>Telecom &amp; Digital Media</h3>
+              <span class="compliance-badge">3GPP / GDPR / KVKK</span>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
+              National-scale DPI network telemetry, subscriber churn &amp; ARPU lakehouses, and sub-minute streaming
+              pipelines handling 20B+ daily events.
+            </p>
+            <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
+              <b>Reference Pedigree:</b> Türk Telekom (50M+ subscribers)
             </div>
           </div>
-        </article>
 
-        <!-- Case Study 03: Yahoo M&A + Enterprise FinOps -->
-        <article class="case-card">
-          <div class="case-card__meta">
-            <span class="case-card__sector">PE Carve-Out &amp; FinOps</span>
-            <span class="case-card__client">Yahoo ($5B M&amp;A) &amp; Tier-1 Banking</span>
-          </div>
-          <h3>1,000x Faster Regulated Releases &amp; &gt;£1M/yr Commercial Licensing FinOps</h3>
-          <div class="case-card__section">
-            <strong>The Challenge</strong>
-            During Yahoo's $5B private equity separation, manual InfoSec sign-offs stalled production releases for 6 weeks, while legacy enterprise database estates bled millions in unoptimized core licenses.
-          </div>
-          <div class="case-card__section">
-            <strong>The Principal Architecture</strong>
-            Built Packer Security-Accredited Golden AMI pipelines with Terraform and Jenkins for instant compliance, alongside hard-isolated database virtualization and AWS unit-cost attribution.
-          </div>
-          <div class="case-metrics">
-            <div class="case-metric">
-              <b>6w → 6m</b>
-              <span>1,000x CI/CD release acceleration</span>
+          <div class="vertical-card">
+            <div class="vertical-card__head">
+              <h3>Industrial IoT, Rail &amp; Mobility</h3>
+              <span class="compliance-badge">ISO 27001 / NIS2</span>
             </div>
-            <div class="case-metric">
-              <b>&gt;£1M/yr</b>
-              <span>Saved via 85% commercial core reduction</span>
+            <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
+              High-frequency sensor ingestion (50M+ files/day), fleet digital twins, and predictive maintenance
+              platforms across AWS IoT Core, Kinesis, and Snowflake.
+            </p>
+            <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
+              <b>Reference Pedigree:</b> Siemens Mobility (£1.6B UK Rail)
             </div>
           </div>
-        </article>
-      </div>
-    </section>
 
-    <!-- Section 5: 6 Regulated Industry Verticals -->
-    <section class="block" id="industries">
-      <div class="head-row">
-        <div>
-          <div class="eyebrow">Regulated Industry Verticals</div>
-          <h2>Domain-Fluent AWS Architecture Across <span class="grad">Six Mission-Critical Sectors.</span></h2>
-          <p class="sub">
-            Generic cloud templates fail when they collide with sector-specific telemetry rates, data sovereignty laws, and regulatory audits.
-            We pair AWS services directly with the compliance frameworks of your industry.
-          </p>
-        </div>
-        <a class="link" href="./industries/">Inspect Regulatory Control Matrix →</a>
-      </div>
+          <div class="vertical-card">
+            <div class="vertical-card__head">
+              <h3>Banking, Capital Markets &amp; FinTech</h3>
+              <span class="compliance-badge">PCI-DSS / SOX / DORA</span>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
+              Audit-traceable Data Vault 2.0 regulatory reporting, Basel/risk analytics, and commercial database core
+              FinOps saving &gt;£1M/yr.
+            </p>
+            <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
+              <b>Reference Pedigree:</b> Bank of America Merrill Lynch · İş Bankası
+            </div>
+          </div>
 
-      <div class="grid grid-3">
-        <div class="vertical-card">
-          <div class="vertical-card__head">
-            <h3>Telecom &amp; Digital Media</h3>
-            <span class="compliance-badge">3GPP / GDPR / KVKK</span>
+          <div class="vertical-card">
+            <div class="vertical-card__head">
+              <h3>Private Equity, M&amp;A &amp; B2B SaaS</h3>
+              <span class="compliance-badge">SOC 2 Type II / HIPAA</span>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
+              Rapid post-merger cloud carve-outs, Packer Golden AMI compliance factories (6w to 6m), and multi-tenant
+              SaaS &amp; LLM unit-cost governance.
+            </p>
+            <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
+              <b>Reference Pedigree:</b> Yahoo Inc. ($5B Apollo M&amp;A)
+            </div>
           </div>
-          <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
-            National-scale DPI network telemetry, subscriber churn &amp; ARPU lakehouses, and sub-minute streaming pipelines handling 20B+ daily events.
-          </p>
-          <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
-            <b>Reference Pedigree:</b> Türk Telekom (50M+ subscribers)
-          </div>
-        </div>
 
-        <div class="vertical-card">
-          <div class="vertical-card__head">
-            <h3>Industrial IoT, Rail &amp; Mobility</h3>
-            <span class="compliance-badge">ISO 27001 / NIS2</span>
+          <div class="vertical-card">
+            <div class="vertical-card__head">
+              <h3>Global Retail &amp; Supply Chain</h3>
+              <span class="compliance-badge">PCI-DSS / Omnichannel</span>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
+              Refactoring brittle legacy ERP/T-SQL monoliths into modular dbt, DuckDB, and Polars pipelines with 100%
+              crash elimination and real-time inventory analytics.
+            </p>
+            <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
+              <b>Reference Pedigree:</b> LC Waikiki (Global Fashion Retail)
+            </div>
           </div>
-          <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
-            High-frequency sensor ingestion (50M+ files/day), fleet digital twins, and predictive maintenance platforms across AWS IoT Core, Kinesis, and Snowflake.
-          </p>
-          <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
-            <b>Reference Pedigree:</b> Siemens Mobility (£1.6B UK Rail)
-          </div>
-        </div>
 
-        <div class="vertical-card">
-          <div class="vertical-card__head">
-            <h3>Banking, Capital Markets &amp; FinTech</h3>
-            <span class="compliance-badge">PCI-DSS / SOX / DORA</span>
-          </div>
-          <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
-            Audit-traceable Data Vault 2.0 regulatory reporting, Basel/risk analytics, and commercial database core FinOps saving &gt;£1M/yr.
-          </p>
-          <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
-            <b>Reference Pedigree:</b> Bank of America Merrill Lynch · İş Bankası
-          </div>
-        </div>
-
-        <div class="vertical-card">
-          <div class="vertical-card__head">
-            <h3>Private Equity, M&amp;A &amp; B2B SaaS</h3>
-            <span class="compliance-badge">SOC 2 Type II / HIPAA</span>
-          </div>
-          <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
-            Rapid post-merger cloud carve-outs, Packer Golden AMI compliance factories (6w to 6m), and multi-tenant SaaS &amp; LLM unit-cost governance.
-          </p>
-          <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
-            <b>Reference Pedigree:</b> Yahoo Inc. ($5B Apollo M&amp;A)
+          <div class="vertical-card">
+            <div class="vertical-card__head">
+              <h3>Public Sector, Defense &amp; GovTech</h3>
+              <span class="compliance-badge">UK Official-Sensitive / Sovereign</span>
+            </div>
+            <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
+              Zero-data-loss intelligence migrations (80 TB), national tax and customs platforms scaled 19x, and
+              municipal housing/citizen data lakes.
+            </p>
+            <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
+              <b>Reference Pedigree:</b> Lockheed Martin · LB of Hackney · Techno Brain
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="vertical-card">
-          <div class="vertical-card__head">
-            <h3>Global Retail &amp; Supply Chain</h3>
-            <span class="compliance-badge">PCI-DSS / Omnichannel</span>
+      <!-- Section 6: Operating Doctrine ("Solve Once, Evolve Continuously") -->
+      <section class="block" id="doctrine">
+        <div class="eyebrow">The Archeon Operating Doctrine</div>
+        <h2>Why CTOs Choose Principal Craft <span class="grad">Over Junior Pyramid Staffing.</span></h2>
+        <p class="sub">
+          Large system integrators sell with senior partners and deliver with rotating pods of juniors who learn on your
+          bill.
+          We engineered Archeon Cloud around four non-negotiable operating principles.
+        </p>
+
+        <div class="manifesto">
+          <div>
+            <div class="num">01 / PRINCIPAL-ONLY EXECUTION</div>
+            <h3>The Architects on the Call Write the Terraform &amp; C++.</h3>
+            <p>
+              We have no junior tier, no offshore body-shop bench, and no account-manager telephone game.
+              Every engagement is led hands-on by a principal engineer with 20+ years of production scar tissue across
+              petabyte-scale data and regulated cloud estates.
+            </p>
           </div>
-          <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
-            Refactoring brittle legacy ERP/T-SQL monoliths into modular dbt, DuckDB, and Polars pipelines with 100% crash elimination and real-time inventory analytics.
-          </p>
-          <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
-            <b>Reference Pedigree:</b> LC Waikiki (Global Fashion Retail)
+          <div>
+            <div class="num">02 / SOLVE ONCE, EVOLVE CONTINUOUSLY</div>
+            <h3>Our "Corporate Brain" Compounds Across Every Engagement.</h3>
+            <p>
+              Every architectural bottleneck we solve is codified into reusable Terraform modules, <code>dbt</code>
+              macros, and FastMCP agentic skills.
+              When you hire Archeon Cloud, you inherit two decades of pre-verified institutional engineering patterns on
+              day one.
+            </p>
+          </div>
+          <div>
+            <div class="num">03 / ASYNC VIDEO RFCS &amp; WRITTEN ADRS</div>
+            <h3>High-Signal Executive Communication, Zero Meeting Bloat.</h3>
+            <p>
+              Prior to major architectural decisions, we deliver concise <strong>5-to-10 minute asynchronous video
+                walkthroughs</strong> paired with rigorous written <strong>Architecture Decision Records (ADRs)</strong>
+              and trade-off matrices so your leadership team can review asynchronously.
+            </p>
+          </div>
+          <div>
+            <div class="num">04 / DAY-ONE CLIENT OWNERSHIP</div>
+            <h3>We Build Your Team's Independence, Not Our Retainer.</h3>
+            <p>
+              Every line of Terraform, Python, SQL, and runbook documentation is committed directly into your
+              repositories from commit #1.
+              We pair-program with your engineers and hand over a self-sustaining platform with zero proprietary black
+              boxes.
+            </p>
           </div>
         </div>
+      </section>
 
-        <div class="vertical-card">
-          <div class="vertical-card__head">
-            <h3>Public Sector, Defense &amp; GovTech</h3>
-            <span class="compliance-badge">UK Official-Sensitive / Sovereign</span>
+      <!-- Section 7: 5-Phase Delivery Lifecycle -->
+      <section class="block">
+        <div class="head-row">
+          <div>
+            <div class="eyebrow">Delivery Lifecycle</div>
+            <h2>From Architectural Discovery to <span class="grad">Self-Sustaining Production.</span></h2>
+            <p class="sub">
+              Inspired by the world's best specialist cloud consultancies, every Archeon engagement follows a
+              disciplined five-phase engineering lifecycle with fixed milestones and transparent pricing.
+            </p>
           </div>
-          <p class="card-p" style="font-size: 0.88rem; color: var(--muted); line-height: 1.58;">
-            Zero-data-loss intelligence migrations (80 TB), national tax and customs platforms scaled 19x, and municipal housing/citizen data lakes.
-          </p>
-          <div class="shared" style="margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--line);">
-            <b>Reference Pedigree:</b> Lockheed Martin · LB of Hackney · Techno Brain
+          <a class="link" href="./poc/">Explore 4-Week Proof Lab →</a>
+        </div>
+
+        <div class="steps steps--5">
+          <div class="step">
+            <h3>Discover &amp; Audit</h3>
+            <p>Deep-dive into your AWS accounts, Cost &amp; Usage Reports (CUR), IAM posture, data pipelines, and
+              commercial database licenses.</p>
+            <em>Output: Scored Audit &amp; ROI Ledger</em>
+          </div>
+          <div class="step">
+            <h3>Design &amp; ADR</h3>
+            <p>Target-state architecture diagrams, security threat models, unit-cost projections, and async video RFC
+              walkthroughs.</p>
+            <em>Output: Signed ADR &amp; Blueprint</em>
+          </div>
+          <div class="step">
+            <h3>Deliver &amp; Prove</h3>
+            <p>Hands-on implementation via our 4-Week Proof Lab or production sprint in your VPC using Terraform, dbt,
+              PyArrow, and Bedrock.</p>
+            <em>Output: Production-Grade PRs</em>
+          </div>
+          <div class="step">
+            <h3>Evolve &amp; Automate</h3>
+            <p>Embed Loop Engineering AI skills, FastMCP servers, CI/CD Golden AMI pipelines, and automated data quality
+              gates.</p>
+            <em>Output: 10x Developer Harness</em>
+          </div>
+          <div class="step">
+            <h3>Inform &amp; Transfer</h3>
+            <p>Deploy tokener FinOps telemetry, run game-day chaos drills, and complete pair-programmed handover to your
+              internal team.</p>
+            <em>Output: Full Team Ownership</em>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Section 6: Operating Doctrine ("Solve Once, Evolve Continuously") -->
-    <section class="block" id="doctrine">
-      <div class="eyebrow">The Archeon Operating Doctrine</div>
-      <h2>Why CTOs Choose Principal Craft <span class="grad">Over Junior Pyramid Staffing.</span></h2>
-      <p class="sub">
-        Large system integrators sell with senior partners and deliver with rotating pods of juniors who learn on your bill.
-        We engineered Archeon Cloud around four non-negotiable operating principles.
-      </p>
+      <!-- Section 8: Global 4-Hub Synchronous Coverage -->
+      <section class="block" id="presence">
+        <div class="eyebrow">Global Engineering Footprint</div>
+        <h2>Four Hubs. <span class="grad">14 Hours of Synchronous Principal Coverage.</span></h2>
+        <p class="sub">
+          With principal presence across <strong>New York, London, Dubai, and Istanbul</strong>, we work live inside
+          your Slack, Teams, and PR review loops across US Eastern, UK/European, and MENAT business hours.
+        </p>
 
-      <div class="manifesto">
-        <div>
-          <div class="num">01 / PRINCIPAL-ONLY EXECUTION</div>
-          <h3>The Architects on the Call Write the Terraform &amp; C++.</h3>
-          <p>
-            We have no junior tier, no offshore body-shop bench, and no account-manager telephone game.
-            Every engagement is led hands-on by a principal engineer with 20+ years of production scar tissue across petabyte-scale data and regulated cloud estates.
-          </p>
+        <div class="grid grid-4">
+          <div class="card loc">
+            <span class="tz">UTC−5 / EDT · AMERICAS</span>
+            <h3>New York</h3>
+            <p>US enterprise &amp; Wall Street coverage, AWS US-East-1/2 architecture, private equity M&amp;A technical
+              due diligence, and Series A-C SaaS scale-ups.</p>
+          </div>
+          <div class="card loc">
+            <span class="tz">UTC+0 / BST · UK &amp; EUROPE</span>
+            <h3>London</h3>
+            <p>UK &amp; European banking, national infrastructure (rail/IIoT), public sector (UK Official-Sensitive),
+              and GDPR/DORA-compliant data platforms.</p>
+          </div>
+          <div class="card loc">
+            <span class="tz">UTC+4 / GST · MENA &amp; GULF</span>
+            <h3>Dubai</h3>
+            <p>GCC sovereign cloud programs, AWS me-central-1 (UAE) &amp; me-south-1 (Bahrain) landing zones, regional
+              telecom, and family-office AI initiatives.</p>
+          </div>
+          <div class="card loc">
+            <span class="tz">UTC+3 / TRT · EURASIA R&amp;D</span>
+            <h3>Istanbul</h3>
+            <p>High-throughput streaming R&amp;D lab, petabyte-scale telecom &amp; retail data engineering, and
+              overlapping European &amp; Middle East delivery.</p>
+          </div>
         </div>
-        <div>
-          <div class="num">02 / SOLVE ONCE, EVOLVE CONTINUOUSLY</div>
-          <h3>Our "Corporate Brain" Compounds Across Every Engagement.</h3>
-          <p>
-            Every architectural bottleneck we solve is codified into reusable Terraform modules, <code>dbt</code> macros, and FastMCP agentic skills.
-            When you hire Archeon Cloud, you inherit two decades of pre-verified institutional engineering patterns on day one.
-          </p>
+        <div class="loc-band">
+          <strong>Continuous Follow-the-Sun Standups:</strong> New York (08:00-18:00 EST) · London (08:00-18:00 GMT) ·
+          Istanbul (09:00-19:00 TRT) · Dubai (09:00-19:00 GST).
         </div>
-        <div>
-          <div class="num">03 / ASYNC VIDEO RFCS &amp; WRITTEN ADRS</div>
-          <h3>High-Signal Executive Communication, Zero Meeting Bloat.</h3>
-          <p>
-            Prior to major architectural decisions, we deliver concise <strong>5-to-10 minute asynchronous video walkthroughs</strong> paired with rigorous written <strong>Architecture Decision Records (ADRs)</strong> and trade-off matrices so your leadership team can review asynchronously.
-          </p>
-        </div>
-        <div>
-          <div class="num">04 / DAY-ONE CLIENT OWNERSHIP</div>
-          <h3>We Build Your Team's Independence, Not Our Retainer.</h3>
-          <p>
-            Every line of Terraform, Python, SQL, and runbook documentation is committed directly into your repositories from commit #1.
-            We pair-program with your engineers and hand over a self-sustaining platform with zero proprietary black boxes.
-          </p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Section 7: 5-Phase Delivery Lifecycle -->
-    <section class="block">
-      <div class="head-row">
-        <div>
-          <div class="eyebrow">Delivery Lifecycle</div>
-          <h2>From Architectural Discovery to <span class="grad">Self-Sustaining Production.</span></h2>
-          <p class="sub">
-            Inspired by the world's best specialist cloud consultancies, every Archeon engagement follows a disciplined five-phase engineering lifecycle with fixed milestones and transparent pricing.
-          </p>
+      <!-- Section 9: Field Notes & Architectural Playbooks -->
+      <section class="block" id="playbooks">
+        <div class="head-row">
+          <div>
+            <div class="eyebrow">Engineering Field Notes &amp; Playbooks</div>
+            <h2>Published Patterns From <span class="grad">Real Production Cutovers.</span></h2>
+            <p class="sub">
+              No vendor fluff or AI-generated filler.
+              Read the exact runbooks, SQL/Terraform patterns, and unit-cost models we use in client engagements.
+            </p>
+          </div>
+          <a class="link" href="./blog/">All Playbooks &amp; Field Notes →</a>
         </div>
-        <a class="link" href="./poc/">Explore 4-Week Proof Lab →</a>
-      </div>
 
-      <div class="steps steps--5">
-        <div class="step">
-          <h3>Discover &amp; Audit</h3>
-          <p>Deep-dive into your AWS accounts, Cost &amp; Usage Reports (CUR), IAM posture, data pipelines, and commercial database licenses.</p>
-          <em>Output: Scored Audit &amp; ROI Ledger</em>
-        </div>
-        <div class="step">
-          <h3>Design &amp; ADR</h3>
-          <p>Target-state architecture diagrams, security threat models, unit-cost projections, and async video RFC walkthroughs.</p>
-          <em>Output: Signed ADR &amp; Blueprint</em>
-        </div>
-        <div class="step">
-          <h3>Deliver &amp; Prove</h3>
-          <p>Hands-on implementation via our 4-Week Proof Lab or production sprint in your VPC using Terraform, dbt, PyArrow, and Bedrock.</p>
-          <em>Output: Production-Grade PRs</em>
-        </div>
-        <div class="step">
-          <h3>Evolve &amp; Automate</h3>
-          <p>Embed Loop Engineering AI skills, FastMCP servers, CI/CD Golden AMI pipelines, and automated data quality gates.</p>
-          <em>Output: 10x Developer Harness</em>
-        </div>
-        <div class="step">
-          <h3>Inform &amp; Transfer</h3>
-          <p>Deploy tokener FinOps telemetry, run game-day chaos drills, and complete pair-programmed handover to your internal team.</p>
-          <em>Output: Full Team Ownership</em>
-        </div>
-      </div>
-    </section>
+        <div class="grid grid-3">
+          <a class="card card--link post-card" href="./blog/ai-ml-cost-optimization-aws.html">
+            <span class="kicker">AI/ML · FinOps</span>
+            <h3>AI/ML Cost Optimization on AWS: Where the GPU Money Really Goes</h3>
+            <p>Training, inference, and the surprisingly large "everything else". A practical playbook for cutting ML
+              and Bedrock spend without slowing the team down.</p>
+            <span class="more">Read Playbook →</span>
+          </a>
 
-    <!-- Section 8: Global 4-Hub Synchronous Coverage -->
-    <section class="block" id="presence">
-      <div class="eyebrow">Global Engineering Footprint</div>
-      <h2>Four Hubs. <span class="grad">14 Hours of Synchronous Principal Coverage.</span></h2>
-      <p class="sub">
-        With principal presence across <strong>New York, London, Dubai, and Istanbul</strong>, we work live inside your Slack, Teams, and PR review loops across US Eastern, UK/European, and MENAT business hours.
-      </p>
+          <a class="card card--link post-card" href="./blog/kubernetes-cost-optimization-eks.html">
+            <span class="kicker">Kubernetes · EKS</span>
+            <h3>Kubernetes Cost Optimization: Closing the Request Gap on Amazon EKS</h3>
+            <p>Your EKS bill is an EC2 bill in disguise. How to right-size requests, pack nodes, buy compute well, and
+              stop paying for empty clusters.</p>
+            <span class="more">Read Playbook →</span>
+          </a>
 
-      <div class="grid grid-4">
-        <div class="card loc">
-          <span class="tz">UTC−5 / EDT · AMERICAS</span>
-          <h3>New York</h3>
-          <p>US enterprise &amp; Wall Street coverage, AWS US-East-1/2 architecture, private equity M&amp;A technical due diligence, and Series A-C SaaS scale-ups.</p>
+          <a class="card card--link post-card" href="./blog/karpenter-cost-optimization.html">
+            <span class="kicker">Karpenter · Spot</span>
+            <h3>Karpenter Cost Optimization: NodePools That Actually Save Money</h3>
+            <p>Karpenter is only as cheap as its configuration. Consolidation, Spot diversification, disruption budgets,
+              and the anti-patterns we keep finding.</p>
+            <span class="more">Read Playbook →</span>
+          </a>
         </div>
-        <div class="card loc">
-          <span class="tz">UTC+0 / BST · UK &amp; EUROPE</span>
-          <h3>London</h3>
-          <p>UK &amp; European banking, national infrastructure (rail/IIoT), public sector (UK Official-Sensitive), and GDPR/DORA-compliant data platforms.</p>
+      </section>
+
+      <!-- Final CTA / Contact Section -->
+      <section class="contact" id="contact">
+        <div class="eyebrow" style="justify-content: center;">Start With a Principal Architect</div>
+        <h2>Speak Directly With the Principal <span class="grad">Who Will Design Your System.</span></h2>
+        <p class="sub">
+          Bring your hairiest AWS bill, your slowest streaming pipeline, your legacy data warehouse bottleneck, or your
+          upcoming SOC 2 / M&amp;A deadline.
+          In 30 minutes, we will map the highest-leverage architectural path forward - or tell you candidly if you don't
+          need us.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="./contact/">
+            Book a 30-Minute Architecture Call
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+          <a class="btn btn--ghost"
+            href="mailto:master@archeoncloud.com?subject=Archeon%20Cloud%20-%20Principal%20Architecture%20Review">
+            Email master@archeoncloud.com
+          </a>
         </div>
-        <div class="card loc">
-          <span class="tz">UTC+4 / GST · MENA &amp; GULF</span>
-          <h3>Dubai</h3>
-          <p>GCC sovereign cloud programs, AWS me-central-1 (UAE) &amp; me-south-1 (Bahrain) landing zones, regional telecom, and family-office AI initiatives.</p>
-        </div>
-        <div class="card loc">
-          <span class="tz">UTC+3 / TRT · EURASIA R&amp;D</span>
-          <h3>Istanbul</h3>
-          <p>High-throughput streaming R&amp;D lab, petabyte-scale telecom &amp; retail data engineering, and overlapping European &amp; Middle East delivery.</p>
-        </div>
-      </div>
-      <div class="loc-band">
-        <strong>Continuous Follow-the-Sun Standups:</strong> New York (08:00-18:00 EST) · London (08:00-18:00 GMT) · Istanbul (09:00-19:00 TRT) · Dubai (09:00-19:00 GST).
-      </div>
-    </section>
-
-    <!-- Section 9: Field Notes & Architectural Playbooks -->
-    <section class="block" id="playbooks">
-      <div class="head-row">
-        <div>
-          <div class="eyebrow">Engineering Field Notes &amp; Playbooks</div>
-          <h2>Published Patterns From <span class="grad">Real Production Cutovers.</span></h2>
-          <p class="sub">
-            No vendor fluff or AI-generated filler.
-            Read the exact runbooks, SQL/Terraform patterns, and unit-cost models we use in client engagements.
-          </p>
-        </div>
-        <a class="link" href="./blog/">All Playbooks &amp; Field Notes →</a>
-      </div>
-
-      <div class="grid grid-3">
-        <a class="card card--link post-card" href="./blog/ai-ml-cost-optimization-aws.html">
-          <span class="kicker">AI/ML · FinOps</span>
-          <h3>AI/ML Cost Optimization on AWS: Where the GPU Money Really Goes</h3>
-          <p>Training, inference, and the surprisingly large "everything else". A practical playbook for cutting ML and Bedrock spend without slowing the team down.</p>
-          <span class="more">Read Playbook →</span>
-        </a>
-
-        <a class="card card--link post-card" href="./blog/kubernetes-cost-optimization-eks.html">
-          <span class="kicker">Kubernetes · EKS</span>
-          <h3>Kubernetes Cost Optimization: Closing the Request Gap on Amazon EKS</h3>
-          <p>Your EKS bill is an EC2 bill in disguise. How to right-size requests, pack nodes, buy compute well, and stop paying for empty clusters.</p>
-          <span class="more">Read Playbook →</span>
-        </a>
-
-        <a class="card card--link post-card" href="./blog/karpenter-cost-optimization.html">
-          <span class="kicker">Karpenter · Spot</span>
-          <h3>Karpenter Cost Optimization: NodePools That Actually Save Money</h3>
-          <p>Karpenter is only as cheap as its configuration. Consolidation, Spot diversification, disruption budgets, and the anti-patterns we keep finding.</p>
-          <span class="more">Read Playbook →</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Final CTA / Contact Section -->
-    <section class="contact" id="contact">
-      <div class="eyebrow" style="justify-content: center;">Start With a Principal Architect</div>
-      <h2>Speak Directly With the Principal <span class="grad">Who Will Design Your System.</span></h2>
-      <p class="sub">
-        Bring your hairiest AWS bill, your slowest streaming pipeline, your legacy data warehouse bottleneck, or your upcoming SOC 2 / M&amp;A deadline.
-        In 30 minutes, we will map the highest-leverage architectural path forward - or tell you candidly if you don't need us.
-      </p>
-      <div class="cta-row">
-        <a class="btn" href="./contact/">
-          Book a 30-Minute Architecture Call
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-        <a class="btn btn--ghost" href="mailto:master@archeoncloud.com?subject=Archeon%20Cloud%20-%20Principal%20Architecture%20Review">
-          Email master@archeoncloud.com
-        </a>
-      </div>
-      <span class="contact-mail">Direct principal inbox · Response within one business day across New York, London, Dubai &amp; Istanbul</span>
-    </section>
-  </main>
-</div>
-
-<!-- Institutional Footer -->
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <img src="./assets/logo.svg" alt="Archeon Cloud" />
-        <p>Principal-led AWS Partner Network (APN) consultancy &amp; Open IP engineering lab. Cloud foundations, 300k rec/sec data platforms, Data Vault 2.0, Agentic AI, and FinOps.</p>
-        <p style="margin-top: 10px; font-size: 0.78rem; color: var(--silver);"><strong>New York · London · Dubai · Istanbul</strong></p>
-      </div>
-      <div>
-        <h4>Capabilities</h4>
-        <ul>
-          <li><a href="./services/#architecture">Cloud Foundation &amp; DevSecOps</a></li>
-          <li><a href="./services/#streaming">Streaming &amp; Data Vault 2.0</a></li>
-          <li><a href="./services/#genai">Agentic AI &amp; Bedrock RAG</a></li>
-          <li><a href="./services/#finops">Cloud &amp; Licensing FinOps</a></li>
-          <li><a href="./poc/">4-Week Proof Lab</a></li>
-          <li><a href="./consultancy/">Executive Advisory</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Open IP (ACE)</h4>
-        <ul>
-          <li><a href="./product/tokener/">tokener LLM FinOps</a></li>
-          <li><a href="./services/#genai">Loop Engineering &amp; FastMCP</a></li>
-          <li><a href="./services/#data-vault">automate-dv-kimball (dbt)</a></li>
-          <li><a href="./services/#streaming">PyArrow Streaming Core</a></li>
-          <li><a href="./startups/">Startups &amp; AWS Activate</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Industries &amp; Proof</h4>
-        <ul>
-          <li><a href="./case-studies/">7 Enterprise Case Studies</a></li>
-          <li><a href="./industries/#telecom">Telecom &amp; Media</a></li>
-          <li><a href="./industries/#iiot">Industrial IoT &amp; Rail</a></li>
-          <li><a href="./industries/#fintech">Banking &amp; FinTech</a></li>
-          <li><a href="./industries/#pe-saas">PE, M&amp;A &amp; B2B SaaS</a></li>
-          <li><a href="./industries/#govtech">Public Sector &amp; Defense</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Company &amp; Insights</h4>
-        <ul>
-          <li><a href="./about/">About &amp; Principal Pedigree</a></li>
-          <li><a href="./blog/">Engineering Playbooks</a></li>
-          <li><a href="./contact/">Book Architecture Review</a></li>
-          <li><a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© 2026 Archeon Cloud LLC · AWS Partner Network (APN) Consulting Partner · All rights reserved.</span>
-      <span>Built by principals, for engineers · <a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></span>
-    </div>
+        <span class="contact-mail">Direct principal inbox · Response within one business day across New York, London,
+          Dubai &amp; Istanbul</span>
+      </section>
+    </main>
   </div>
-</footer>
+
+  <!-- Institutional Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <img src="./assets/logo.svg" alt="Archeon Cloud" />
+          <p>Principal-led AWS Partner Network (APN) consultancy &amp; Open IP engineering lab. Cloud foundations, 300k
+            rec/sec data platforms, Data Vault 2.0, Agentic AI, and FinOps.</p>
+          <p style="margin-top: 10px; font-size: 0.78rem; color: var(--silver);"><strong>New York · London · Dubai ·
+              Istanbul</strong></p>
+        </div>
+        <div>
+          <h4>Capabilities</h4>
+          <ul>
+            <li><a href="./services/#architecture">Cloud Foundation &amp; DevSecOps</a></li>
+            <li><a href="./services/#streaming">Streaming &amp; Data Vault 2.0</a></li>
+            <li><a href="./services/#genai">Agentic AI &amp; Bedrock RAG</a></li>
+            <li><a href="./services/#finops">Cloud &amp; Licensing FinOps</a></li>
+            <li><a href="./poc/">4-Week Proof Lab</a></li>
+            <li><a href="./consultancy/">Executive Advisory</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Open IP (ACE)</h4>
+          <ul>
+            <li><a href="./product/tokener/">tokener LLM FinOps</a></li>
+            <li><a href="./services/#genai">Loop Engineering &amp; FastMCP</a></li>
+            <li><a href="./services/#data-vault">Agentic Data Dev Factory</a></li>
+            <li><a href="./services/#streaming">PyArrow Streaming Core</a></li>
+            <li><a href="./startups/">Startups &amp; AWS Activate</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Industries &amp; Proof</h4>
+          <ul>
+            <li><a href="./case-studies/">7 Enterprise Case Studies</a></li>
+            <li><a href="./industries/#telecom">Telecom &amp; Media</a></li>
+            <li><a href="./industries/#iiot">Industrial IoT &amp; Rail</a></li>
+            <li><a href="./industries/#fintech">Banking &amp; FinTech</a></li>
+            <li><a href="./industries/#pe-saas">PE, M&amp;A &amp; B2B SaaS</a></li>
+            <li><a href="./industries/#govtech">Public Sector &amp; Defense</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company &amp; Insights</h4>
+          <ul>
+            <li><a href="./about/">About &amp; Principal Pedigree</a></li>
+            <li><a href="./blog/">Engineering Playbooks</a></li>
+            <li><a href="./contact/">Book Architecture Review</a></li>
+            <li><a href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Archeon Cloud LLC · AWS Partner Network (APN) Consulting Partner · All rights reserved.</span>
+        <span>Built by principals, for engineers · <a
+            href="mailto:master@archeoncloud.com">master@archeoncloud.com</a></span>
+      </div>
+    </div>
+  </footer>
 
 </body>
+
 </html>
